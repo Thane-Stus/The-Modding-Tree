@@ -12,11 +12,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Humble Beginnings",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1</h3><br>
+		- Added Oak Logs, and 3 milestones for it
+		- Added Lumber Merchant, and 2 upgrades for it
 	<h3>v0.0</h3><br>
 		- test`
 
@@ -41,6 +44,8 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if(hasMilestone("o", 0)) {gain = gain.times(2)}
+	if(hasMilestone("o", 1)) {gain = gain.times(2)}
 	return gain
 }
 
