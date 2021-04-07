@@ -1,13 +1,13 @@
 let modInfo = {
-	name: "The Hypixel Tree",
+	name: "The Hypixel Skyblock Tree",
 	id: "hypixeltree",
-	author: "Thane",
-	pointsName: "coins",
+	author: "Thane-Stus",
+	pointsName: "Work",
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (1000), // Used for hard resets and new players
 	
-	offlineLimit: 1,  // In hours
+	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
@@ -17,8 +17,8 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1</h3><br>
-		- Test Update, Please Ignore`
+	<h3>v0.0</h3><br>
+		- test`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
