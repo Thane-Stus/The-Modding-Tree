@@ -16,3 +16,6 @@ Fuels
     Block of Coal +20% Minion Output, cost 100 coal
     Enchanted Charcoal Minion Output +20%, 160 oak logs
     Enchanted Coal Minion Output +30%, 160 Coal
+
+Add birch, coal, and mining skill levels
+And add more to Foraging skill
