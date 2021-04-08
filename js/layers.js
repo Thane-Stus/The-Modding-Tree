@@ -32,22 +32,28 @@ addLayer("o", {
 
     layerShown(){return true},
 
+    passiveGeneration() {
+        let gain = new Decimal(0)
+        if ( amount = getBuyableAmount(this.layer, 11)) gain = gain.plus(getBuyableAmount(this.layer, 11)).times(0.1);
+        if ( hasUpgrade("o", 11)) gain = gain.plus(getBuyableAmount(this.layer, 11)).times(0.2);
+        return gain
+    },
+
     tabFormat: {
         "Main":{
             content: [
                 "main-display", 
-                "prestige-button", 
+                "prestige-button", "resource-display",
                 "blank",
-                ["display-text",
-				function() { return 'You have ' + format(player.o.points) + ' Oak Logs' } ],
-                ["display-text",
-				function() {return 'Your best Oak Logs is ' + formatWhole(player.o.best) },
-					],
-                "milestones",]
+                "buyables", 
+                "upgrades",]
         },
-        "Minions":{
-            unlocked() { return hasMilestone("o", 1)},
-            content: ["main-display", "prestige-button", "buyables", "upgrades",]
+        "Milestones":{
+            content: [
+                "main-display", 
+                "prestige-button", "resource-display",
+                "blank",
+                "milestones",]
         }
     },
 
@@ -67,7 +73,52 @@ addLayer("o", {
             effectDescription: "Unlock Foraging layer and Double Work Gain",
             done() { return player.o.best.gte(100) },
         },
-    }
+    },
+
+    buyables: {
+        rows: 1,
+        cols: 1,
+        11: {
+            title: "Oak Minion 1",
+            unlocked() { return hasMilestone("o", 1) }, 
+            cap() { 
+                let cap = new Decimal(10)
+                return cap
+            },
+            cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = new Decimal(80)
+                let amount = getBuyableAmount("o", 11)
+                if (amount.gt(0)) cost = cost.mul(2);
+                if (amount.gt(1)) cost = cost.mul(2);
+                if (amount.gt(2)) cost = cost.mul(2);
+                if (amount.gt(3)) cost = cost.mul(2);
+                return cost
+            },
+            display() { // Everything else displayed in the buyable button after the title
+                let data = tmp[this.layer].buyables[this.id]
+                let display = ((player[this.layer].buyables[this.id].gte(data.cap)?"MAXED":(("Cost: " + formatWhole(data.cost) + " Oak Logs")))+"\n\
+                Amount: " + formatWhole(player[this.layer].buyables[this.id])+" / "+formatWhole(data.cap)+"\n\
+                Each Minion produces 10% of your Oak Log gain per second \n\ Make the 10% above update with upgrades")
+                return display;
+            },
+            canAfford () { return player.o.points.gte(this.cost()) && player[this.layer].buyables[this.id].lt(tmp[this.layer].buyables[this.id].cap) },
+            buy() {
+                player.o.points = player.o.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, amount.add(1))
+            }
+        },
+    },
+
+    upgrades: {
+        rows: 1,
+        cols: 2,
+        11: {
+            title: "Minion Tier 2",
+            description: "Doubles Minion Output to 20%, Resets Minion count to 1, and Doubles Minion costs.",
+            unlocked() { return hasMilestone("o", 1) },
+            cost: new Decimal("100"),
+        },
+    },
 })
 
 addLayer("foraging", {
