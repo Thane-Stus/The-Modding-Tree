@@ -88,10 +88,10 @@ addLayer("o", {
             cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = new Decimal(80)
                 let amount = getBuyableAmount("o", 11)
-                if (amount.gt(0)) cost = cost.mul(2);
-                if (amount.gt(1)) cost = cost.mul(2);
-                if (amount.gt(2)) cost = cost.mul(2);
-                if (amount.gt(3)) cost = cost.mul(2);
+                if (amount.gt(0)) cost = cost.mul(2); //160
+                if (amount.gt(1)) cost = cost.mul(2); //320
+                if (amount.gt(2)) cost = cost.mul(1.6); //512
+                if (amount.gt(3)) cost = cost.mul(2.5); //1280
                 return cost
             },
             display() { // Everything else displayed in the buyable button after the title
