@@ -34,11 +34,16 @@ addLayer("o", {
 
     passiveGeneration() {
         let gain = new Decimal(0)
-        if(hasUpgrade("o", 21)) gain = gain.plus(0.1);
-        if(hasUpgrade("o", 22)) gain = gain.plus(0.1);
-        if(hasUpgrade("o", 23)) gain = gain.plus(0.1);
-        if(hasUpgrade("o", 24)) gain = gain.plus(0.1);
-        if(hasUpgrade("o", 25)) gain = gain.plus(0.1);
+        if(hasUpgrade("o", 21)) gain = gain.add(1);
+        if(hasUpgrade("o", 22)) gain = gain.mul(1.06);
+        if(hasUpgrade("o", 23)) gain = gain.mul(1.06);
+        if(hasUpgrade("o", 24)) gain = gain.mul(1.06);
+        if(hasUpgrade("o", 25)) gain = gain.mul(1.06);
+        if(hasUpgrade("o", 31)) gain = gain.mul(1.11);
+        if(hasUpgrade("o", 32)) gain = gain.mul(1.11);
+        if(hasUpgrade("o", 33)) gain = gain.mul(1.15);
+        if(hasUpgrade("o", 34)) gain = gain.mul(1.15);
+        if(hasUpgrade("o", 35)) gain = gain.mul(1.21);
         return gain
     },
 
@@ -65,7 +70,7 @@ addLayer("o", {
         },
         1: {
             requirementDescription: "100 Oak Logs",
-            effectDescription: "Unlock Foraging Skill(Coming Soon)",
+            effectDescription: "(Coming Soon) Unlock Foraging Skill and the Cobblestone Mine",
             done() { return player.o.best.gte(100) },
         },
         2: {
@@ -75,7 +80,7 @@ addLayer("o", {
         },
         3: {
             requirementDescription: "500 Oak Logs",
-            effectDescription: "Unlocks Small Storage, located in Crafting tab",
+            effectDescription: "Unlocks Small Storage Upgrade",
             done() { return player.o.best.gte(500) },
         },
         4: {
@@ -85,12 +90,12 @@ addLayer("o", {
         },
         5: {
             requirementDescription: "2000 Oak Logs",
-            effectDescription: "Unlocks Enchanted Oak, located in Crafting tab",
+            effectDescription: "Unlocks Enchanted Oak Logs Layer",
             done() { return player.o.best.gte(2000) },
         },
         6: {
             requirementDescription: "5000 Oak Logs",
-            effectDescription: "Unlocks Medium Storage",
+            effectDescription: "Unlocks Medium Storage Upgrade",
             done() { return player.o.best.gte(5000) },
         },
         7: {
@@ -119,7 +124,7 @@ addLayer("o", {
             cost: new Decimal("20"),
             effect() {
                 //let  eff = Decimal.pow(2, player.o.points.plus(1).log10().pow(.8)); //This is a stronger formula borrowed from either DynasTree or PTR
-                let eff = player[this.layer].points.add(1).ln().div(5).add(1) //This is a weaker formula borrowed from The Leveling Tree
+                let eff = player[this.layer].points.add(1).ln().div(5).add(2) //This is a weaker formula borrowed from The Leveling Tree
                 return eff;
             },
             effectDisplay() { return format(this.effect())+"x" },
@@ -127,31 +132,31 @@ addLayer("o", {
 
         21: {
             title: "Oak Minion I",
-            description: "Generates 10% of Oak Log gain per second",
+            description: "Generates 100% of Oak Log gain per second",
             unlocked() { return hasMilestone("o", 0) },
             cost: new Decimal("80"),
         },
         22: {
             title: "Oak Minion II",
-            description: "Boosts Oak Log gain per second to 20%",
+            description: "Boosts Oak Log gain per second by 6%",
             unlocked() { return hasMilestone("o", 0) },
             cost: new Decimal("160"),
         },
         23: {
             title: "Oak Minion III",
-            description: "Boosts Oak Log gain per second to 30%",
+            description: "Boosts Oak Log gain per second by 6%",
             unlocked() { return hasMilestone("o", 0) },
             cost: new Decimal("320"),
         },
         24: {
             title: "Oak Minion IV",
-            description: "Boosts Oak Log gain per second to 40%",
+            description: "Boosts Oak Log gain per second by 6%",
             unlocked() { return hasMilestone("o", 0) },
             cost: new Decimal("512"),
         },
         25: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion V</h3> <br>Boosts Oak Log gain per second to 50%<br><br>Cost: 8 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion V</h3> <br>Boosts Oak Log gain per second by 6%<br><br>Cost: 8 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -165,7 +170,7 @@ addLayer("o", {
         },
         31: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VI</h3> <br>Boosts Oak Log gain per second to 60%<br><br>Cost: 16 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion VI</h3> <br>Boosts Oak Log gain per second by 11%<br><br>Cost: 16 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -179,7 +184,7 @@ addLayer("o", {
         },
         32: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VII</h3> <br>Boosts Oak Log gain per second to 70%<br><br>Cost: 32 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion VII</h3> <br>Boosts Oak Log gain per second by 11%<br><br>Cost: 32 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -193,7 +198,7 @@ addLayer("o", {
         },
         33: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VIII</h3> <br>Boosts Oak Log gain per second to 80%<br><br>Cost: 64 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion VIII</h3> <br>Boosts Oak Log gain per second by 15%<br><br>Cost: 64 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -207,7 +212,7 @@ addLayer("o", {
         },
         34: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion IX</h3> <br>Boosts Oak Log gain per second to 90%<br><br>Cost: 128 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion IX</h3> <br>Boosts Oak Log gain per second by 15%<br><br>Cost: 128 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -221,7 +226,7 @@ addLayer("o", {
         },
         35: {
             unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion X</h3> <br>Boosts Oak Log gain per second to 100%<br><br>Cost: 256 Enchanted Oak Logs"},
+            fullDisplay() {return "<h3>Oak Minion X</h3> <br>Boosts Oak Log gain per second by 21%<br><br>Cost: 256 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = getBuyableAmount(this.layer, 11)
@@ -240,30 +245,18 @@ addLayer("o", {
             description: "ph",
             cost: new Decimal("20"),
             unlocked() { return hasMilestone("o", 3) },
-            effect() {
-                return eff;
-            },
-            effectDisplay() { return format(this.effect())+"x" },
         },
         42: {
             title: "Medium Oak Storage",
             description: "ph",
             cost: new Decimal("20"),
             unlocked() { return hasMilestone("o", 6) },
-            effect() {
-                return eff;
-            },
-            effectDisplay() { return format(this.effect())+"x" },
         },
         43: {
             title: "Large Oak Storage",
             description: "ph",
             cost: new Decimal("20"),
             unlocked() { return hasMilestone("o", 8) },
-            effect() {
-                return eff;
-            },
-            effectDisplay() { return format(this.effect())+"x" },
         },
     },
 

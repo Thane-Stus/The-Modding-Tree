@@ -1,6 +1,20 @@
 Oak
-    Decide what effect to add to the Storage upgrades
-    Medium and Large should boost Smalls formula
+    Rework Enchanted Oak Logs into a side layer, like Super Boosters/Generators from TPTR
+        Each EOL should boost Oak Log gain by 5%
+        Move minion upgrades that cost EOL to the EOL layer
+        Same for Storage upgrades which should be made to boost either work gain or all layers passivegen
+        EOL should only reset current work amount
+        Never max buy
+
+    Storage Upgrades   
+        These upgrades show in all gathering/generating layers
+        They always cost Oak Logs and Enchanted Oak Logs
+        Small Storage 64 Oak Logs
+            Boosts passive gain
+        Medium Storage 8 Enchanted Oak Logs
+            Improves Small Storage formula
+        Large Storage
+            Improves Small Storage formula again
 
 Skill Layers
     Should be challenges
@@ -10,15 +24,14 @@ Skill Layers
     Rewards should be something more than just a basic bonus
 
 Compactors
-    Upon unlock add a buyable to all trees with their enchanted option unlocked
-    starts with max 10 levels, unlocking higher tiers of compactors in the milestone tree with add new compactor buyables and increase level count
-    First tier of compactor buyables only apply to first compacting tier for each resource
-        So Diamonds would go (Diamonds>Enchanted Diamonds>Enchanted Diamond Blocks) but you need the tier2 for the enchanted block
-    Compactor Levels cost Cobblestone
-        Higher tiers cost Enchanted Cobble
-    Redstone milestones increase level cap and reduce buyable price
-        doesnt decrease the drain on top level resource
-    I honestly have NO idea how to do this
+    Upon unlocks add a buyable to Enchanted layers
+    Buyable should generate 1 of whatever enchanted item per level and drain same amount of the regular resource
+    Buyable has cap of 10 to start with, meaning at best they can make 10 Enchanted X and drain 1600 Regular X
+    Milestones in the cobblestone tree will unlock upgrades that increase the buyables cap
+    These upgrades must be purchased in each tree after they are unlocked
+    Further upgrades will be unlocked in the Redstone tree
+
+    Now i just need to figure out how to do this
 
 Cobblestone
     Same base gain as Oak
