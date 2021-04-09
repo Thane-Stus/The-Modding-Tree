@@ -128,7 +128,8 @@ addLayer("o", {
             description: "Boosts Oak Log gain based on current Oak Log count",
             cost: new Decimal("20"),
             effect() {
-                let  eff = Decimal.pow(2, player.o.points.plus(1).log10().pow(.8));
+                //let  eff = Decimal.pow(2, player.o.points.plus(1).log10().pow(.8)); //This is a stronger formula borrowed from either DynasTree or PTR
+                let eff = player[this.layer].points.add(1).ln().div(5).add(1) //This is a weaker formula borrowed from The Leveling Tree
                 return eff;
             },
             effectDisplay() { return format(this.effect())+"x" },
