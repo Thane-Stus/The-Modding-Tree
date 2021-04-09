@@ -1,0 +1,54 @@
+Oak
+    Add and setup the storage buyables
+
+Foraging
+    Not sure how to make "skill" unlocks work here
+    Might add them as a buyable that boosts all log outputs /shrug
+
+Cobblestone
+    Same base gain as Oak
+    Still resets Work same as Oak
+        This encourages minion rushing
+    Upgrades
+        11 Rookie Pickaxe 10 Cobble
+            x2 Cobblestone gain
+            +1 Work gain
+        12 Promising Pickaxe 20 Cobble
+            Boosts Cobblestone gain based on current Cobblestone
+        13 Golden Pickaxe
+            Costs 5 Gold, requires Gold Mine unlocked
+            x3 Cobblestone gain
+            x2 Work gain
+        14 Furnace 8 Cobble
+            Requires Rookie Pickaxe
+            Unlocks Charcoal Minion upgrade in all layers that costs oak and boosts that layers auto gain
+            This upgrade costs 1 Oak
+        15 Enchanted Furnace 64 Enchanted Cobble and 8 Enchanted Coal
+            Requires Furnace and Milestone 8
+            Unlocks Enchanted Charcoal Minion upgrade in all layers that costs oak and boosts that layers auto gain
+            This upgrade costs 160 Oak
+        21-25 and 31-35 are Minions
+    
+    Milestones
+        1 50 Cobble Minion
+        2 100 Unlock Mining Skill layer
+        3 250 Unlocks Compactor layer
+            Compactor Layer allows you to select an enchanted resource and auto make it
+            Comes with 2 slots to begin with, each making 1 of whatever per tick
+            More slots added by higher tiers of cobblestone collection
+            But they all have to be crafted first
+            This one costs 64 Cobble and 8 Coal
+        4 1000 Enchanted Cobble
+        5 2500 Compactor 2000
+            Increases Compactor slot count to 6
+        6 5000 ph
+        7 10000 ph
+        8 25000 Unlocks Hyper Furnace Upgrade
+        9 40000 Haste Ring
+            Add this whenever you add talisman stuff, which should function like achievements
+        10 70000 Compactor 3000
+            Increases Compactor slot count to 14
+            Add 2 more of these in Redstone layer
+
+    Buyables
+        I think this layer just need Enchanted Cobblestone, maybe keep it in main area below upgrades?
