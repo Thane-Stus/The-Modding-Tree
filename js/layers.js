@@ -51,18 +51,9 @@ addLayer("o", {
                 "blank",
                 "upgrades",
                 "blank",
-                "milestones",]
-        },
-        "Crafting":{
-            content: [
-                "main-display", 
-                "prestige-button", 
-                "resource-display",
+                "buyables",
                 "blank",
-                "buyables",],
-                unlocked(){
-                        return hasMilestone("o", 3)
-                }
+                "milestones",]
         },
     },
 
@@ -121,7 +112,6 @@ addLayer("o", {
             title: "Rookie Oak Axe",
             description: "x2 Oak Log Gain and +1 Work Gain",
             cost: new Decimal("10"),
-        
         },
         12: {
             title: "Promising Oak Axe",
@@ -243,6 +233,38 @@ addLayer("o", {
                 setBuyableAmount(this.layer, 11, amount.sub(256))
             },
         },
+
+        //These should show in ALL layers, always costs Oak but has different names because you need a new one for each Minion
+        41: {
+            title: "Small Oak Storage",
+            description: "ph",
+            cost: new Decimal("20"),
+            unlocked() { return hasMilestone("o", 3) },
+            effect() {
+                return eff;
+            },
+            effectDisplay() { return format(this.effect())+"x" },
+        },
+        42: {
+            title: "Medium Oak Storage",
+            description: "ph",
+            cost: new Decimal("20"),
+            unlocked() { return hasMilestone("o", 6) },
+            effect() {
+                return eff;
+            },
+            effectDisplay() { return format(this.effect())+"x" },
+        },
+        43: {
+            title: "Large Oak Storage",
+            description: "ph",
+            cost: new Decimal("20"),
+            unlocked() { return hasMilestone("o", 8) },
+            effect() {
+                return eff;
+            },
+            effectDisplay() { return format(this.effect())+"x" },
+        },
     },
 
     buyables: {
@@ -260,27 +282,6 @@ addLayer("o", {
             },
             cost() { 
                 let cost = new Decimal(160)
-                return cost 
-            },
-            canAfford () { return player.o.points.gte(this.cost()) },
-            buy() { 
-                player.o.points = player.o.points.sub(this.cost())
-                player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
-            },
-        },
-        
-        31: {
-            title: "Small Storage",
-            unlocked() {return hasMilestone("o", 3)},
-            display() {
-                let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + formatWhole(data.cost) + " Oak Logs")+"\n\
-                Amount: " + formatWhole(player[this.layer].buyables[this.id])+"\n\
-                placeholder text")
-                return display;
-            },
-            cost() { 
-                let cost = new Decimal(64)
                 return cost 
             },
             canAfford () { return player.o.points.gte(this.cost()) },
