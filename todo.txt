@@ -1,9 +1,12 @@
 Oak
     Add and setup the storage buyables
 
-Foraging
-    Not sure how to make "skill" unlocks work here
-    Might add them as a buyable that boosts all log outputs /shrug
+Skill Layers
+    Should be challenges
+    Goal is to get to a certain milestone in whatever layer the challenge is for
+    Challenges disable bonuses from other trees
+    And they should half gain or something to make them actually a challenge
+    Rewards should be something more than just a basic bonus
 
 Cobblestone
     Same base gain as Oak
