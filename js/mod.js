@@ -5,7 +5,7 @@ let modInfo = {
 	pointsName: "Work",
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (1000), // Used for hard resets and new players
+	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	
 	offlineLimit: 0,  // In hours
 }
@@ -17,11 +17,8 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1</h3><br>
-		- Added Oak Logs, and 3 milestones for it
-		- Added Lumber Merchant, and 2 upgrades for it
 	<h3>v0.0</h3><br>
-		- test`
+		- Write these when you actually get something playable`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -43,10 +40,8 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1000)
-	if(hasMilestone("o", 0)) {gain = gain.times(2)}
-	if(hasMilestone("o", 1)) {gain = gain.times(2)}
-	if(hasMilestone("o", 2)) {gain = gain.times(2)}
+	let gain = new Decimal(1)
+	if(hasUpgrade("o", 11)) {gain = gain.add(1)}
 	return gain
 }
 
