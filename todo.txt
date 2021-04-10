@@ -5,6 +5,7 @@ Oak
         Same for Storage upgrades which should be made to boost either work gain or all layers passivegen
         EOL should only reset current work amount
         Never max buy
+        Make EOL have a line thing to O layer
 
     Storage Upgrades   
         These upgrades show in all gathering/generating layers

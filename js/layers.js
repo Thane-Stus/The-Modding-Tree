@@ -7,7 +7,7 @@ addLayer("o", {
 		points: new Decimal(0),
         best: new Decimal(0),
     }},
-    color: "#4BDC13", // CHANGE ME
+    color: "#83622f", // CHANGE ME
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Oak Logs", // Name of prestige currency
     baseResource: "Work", // Name of resource prestige is based on
@@ -16,7 +16,7 @@ addLayer("o", {
     exponent: 0.5, // Prestige currency exponent
 
     gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
+        let mult = new Decimal(1)
         if (hasUpgrade("o", 11)) mult = mult.mul(2);
         if (hasUpgrade("o", 12)) mult = mult.mul(upgradeEffect("o",12));
         return mult
@@ -34,16 +34,7 @@ addLayer("o", {
 
     passiveGeneration() {
         let gain = new Decimal(0)
-        if(hasUpgrade("o", 21)) gain = gain.add(1);
-        if(hasUpgrade("o", 22)) gain = gain.mul(1.06);
-        if(hasUpgrade("o", 23)) gain = gain.mul(1.06);
-        if(hasUpgrade("o", 24)) gain = gain.mul(1.06);
-        if(hasUpgrade("o", 25)) gain = gain.mul(1.06);
-        if(hasUpgrade("o", 31)) gain = gain.mul(1.11);
-        if(hasUpgrade("o", 32)) gain = gain.mul(1.11);
-        if(hasUpgrade("o", 33)) gain = gain.mul(1.15);
-        if(hasUpgrade("o", 34)) gain = gain.mul(1.15);
-        if(hasUpgrade("o", 35)) gain = gain.mul(1.21);
+        if (hasUpgrade(this.layer, 21)) gain = gain.add(upgradeEffect(this.layer, 21));
         return gain
     },
 
@@ -70,7 +61,7 @@ addLayer("o", {
         },
         1: {
             requirementDescription: "100 Oak Logs",
-            effectDescription: "(Coming Soon) Unlock Foraging Skill and the Cobblestone Mine",
+            effectDescription: "(Coming Soon) Unlock Foraging Skill, Skills are Challenges",
             done() { return player.o.best.gte(100) },
         },
         2: {
@@ -80,12 +71,12 @@ addLayer("o", {
         },
         3: {
             requirementDescription: "500 Oak Logs",
-            effectDescription: "Unlocks Small Storage Upgrade",
+            effectDescription: "Unlocks Small Storage Upgrade, This upgrade shows in all trees with Minions",
             done() { return player.o.best.gte(500) },
         },
         4: {
             requirementDescription: "1000 Oak Logs",
-            effectDescription: "ph", //
+            effectDescription: "ph", //Forest Biome Stick in game, not sure what to put here
             done() { return player.o.best.gte(1000) },
         },
         5: {
@@ -123,8 +114,8 @@ addLayer("o", {
             description: "Boosts Oak Log gain based on current Oak Log count",
             cost: new Decimal("20"),
             effect() {
-                //let  eff = Decimal.pow(2, player.o.points.plus(1).log10().pow(.8)); //This is a stronger formula borrowed from either DynasTree or PTR
-                let eff = player[this.layer].points.add(1).ln().div(5).add(2) //This is a weaker formula borrowed from The Leveling Tree
+                //let  eff = Decimal.pow(2, player.o.points.plus(1).log10().pow(.8)); //Cant remember if I borrowed this from TPTR or DynasTree, either way its not getting used anymore so /shrug
+                let eff = player[this.layer].points.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
                 return eff;
             },
             effectDisplay() { return format(this.effect())+"x" },
@@ -132,156 +123,164 @@ addLayer("o", {
 
         21: {
             title: "Oak Minion I",
-            description: "Generates 100% of Oak Log gain per second",
+            description: "Generates 100% of Oak Log Gain per second",
             unlocked() { return hasMilestone("o", 0) },
             cost: new Decimal("80"),
+            effect() {
+                let eff = Decimal.plus(1);
+                if(hasUpgrade(this.layer, 22)) eff = eff.mul(1.06)
+                if(hasUpgrade(this.layer, 23)) eff = eff.mul(1.06)
+                if(hasUpgrade(this.layer, 24)) eff = eff.mul(1.06)
+                if(hasUpgrade("eol", 11)) eff = eff.mul(1.06)
+                if(hasUpgrade("eol", 13)) eff = eff.mul(1.11)
+                if(hasUpgrade("eol", 13)) eff = eff.mul(1.11)
+                if(hasUpgrade("eol", 14)) eff = eff.mul(1.15)
+                if(hasUpgrade("eol", 15)) eff = eff.mul(1.15)
+                if(hasUpgrade("eol", 21)) eff = eff.mul(1.21)
+                if(hasUpgrade("eol", 22)) eff = eff.mul(1.21)
+                if(hasUpgrade(this.layer, 31)) eff = eff.mul(upgradeEffect(this.layer, 31))
+                return eff
+            },
+            effectDisplay() { return format(this.effect()) },
         },
         22: {
             title: "Oak Minion II",
-            description: "Boosts Oak Log gain per second by 6%",
-            unlocked() { return hasMilestone("o", 0) },
+            description: "Boosts first Oak Minion by 6%",
+            unlocked() { return hasUpgrade(this.layer, 21) },
             cost: new Decimal("160"),
         },
         23: {
             title: "Oak Minion III",
-            description: "Boosts Oak Log gain per second by 6%",
-            unlocked() { return hasMilestone("o", 0) },
+            description: "Boosts first Oak Minion by 6%",
+            unlocked() { return hasUpgrade(this.layer, 22) },
             cost: new Decimal("320"),
         },
         24: {
             title: "Oak Minion IV",
-            description: "Boosts Oak Log gain per second by 6%",
-            unlocked() { return hasMilestone("o", 0) },
+            description: "Boosts first Oak Minion by 6%",
+            unlocked() { return hasUpgrade(this.layer, 23) },
             cost: new Decimal("512"),
-        },
-        25: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion V</h3> <br>Boosts Oak Log gain per second by 6%<br><br>Cost: 8 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(8)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(8))
-            },
-        },
-        31: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VI</h3> <br>Boosts Oak Log gain per second by 11%<br><br>Cost: 16 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(16)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(16))
-            },
-        },
-        32: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VII</h3> <br>Boosts Oak Log gain per second by 11%<br><br>Cost: 32 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(32)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(32))
-            },
-        },
-        33: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion VIII</h3> <br>Boosts Oak Log gain per second by 15%<br><br>Cost: 64 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(64)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(64))
-            },
-        },
-        34: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion IX</h3> <br>Boosts Oak Log gain per second by 15%<br><br>Cost: 128 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(128)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(128))
-            },
-        },
-        35: {
-            unlocked() { return hasMilestone("o", 5) },
-            fullDisplay() {return "<h3>Oak Minion X</h3> <br>Boosts Oak Log gain per second by 21%<br><br>Cost: 256 Enchanted Oak Logs"},
-            canAfford() { 
-                let canAfford = false
-                let amount = getBuyableAmount(this.layer, 11)
-                if (amount.gte(256)) canAfford = true
-                return canAfford
-            },
-            onPurchase() {
-                let amount = getBuyableAmount(this.layer, 11)
-                setBuyableAmount(this.layer, 11, amount.sub(256))
-            },
         },
 
         //These should show in ALL layers, always costs Oak but has different names because you need a new one for each Minion
-        41: {
+        //The effect from the Small storage directly boosts the base minion
+        31: {
             title: "Small Oak Storage",
-            description: "ph",
-            cost: new Decimal("20"),
+            description: "Increases first Minion gain by 33%",
+            cost: new Decimal("64"),
             unlocked() { return hasMilestone("o", 3) },
+            effect() {
+                let eff = Decimal.add(1.33);
+                if(hasUpgrade(this.layer, 32)) eff = eff.plus(0.33)
+                if(hasUpgrade(this.layer, 33)) eff = eff.plus(0.34)
+                return eff
+            },
         },
-        42: {
+        //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
+        32: {
             title: "Medium Oak Storage",
-            description: "ph",
-            cost: new Decimal("20"),
-            unlocked() { return hasMilestone("o", 6) },
+            description: "Increases first Minion gain by 33%",
+            cost: new Decimal("8"),
+            unlocked() { return hasUpgrade("o", 31) },
         },
-        43: {
+        33: {
             title: "Large Oak Storage",
-            description: "ph",
-            cost: new Decimal("20"),
-            unlocked() { return hasMilestone("o", 8) },
+            description: "Increases first Minion gain by 33%",
+            cost: new Decimal("256"),
+            unlocked() { return hasUpgrade("o", 32) },
+        },
+    },
+})
+
+addLayer("eol", {
+    name: "Enchanted Oak Logs", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "EOL", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+        best: new Decimal(0),
+    }},
+    color: "#66502e", // CHANGE MEresource: "honour", // Name of prestige currency
+    resource: "Enchanted Oak Logs", // Name of prestige currency
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+        baseResource: "Oak Logs",
+        baseAmount() { return player.o.points },
+        requires: new Decimal(160),                         // Determines the formula used for calculating prestige currency.
+    
+        gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+            let mult = new Decimal(1)
+            if(player.eol.points.gte(1)) mult = mult.div(2)
+            return mult              // Factor in any bonuses multiplying gain here.
+        },
+        canBuyMax() {return false},
+
+        
+       
+
+    row: 0, // Row the layer is in on the tree (0 is the first row)
+
+    layerShown(){return hasMilestone("o", 5)},
+
+    tabFormat: {
+        "Main":{
+            content: [
+                "main-display", 
+                "prestige-button", 
+                "resource-display",
+                "blank",
+                "upgrades",
+                "blank",
+                "buyables",
+                "blank",
+                "milestones",]
         },
     },
 
-    buyables: {
-        rows: 3,
-        cols: 3,
+    upgrades: {
+        rows: 5,
+        cols: 5,
         11: {
-            title: "Enchanted Oak Log",
-            unlocked() {return hasMilestone("o", 5)},
-            display() {
-                let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + formatWhole(data.cost) + " Oak Logs")+"\n\
-                Amount: " + formatWhole(player[this.layer].buyables[this.id])+"\n\
-                Used to buy upgrades. \n\ Doesnt do anything else.")
-                return display;
-            },
-            cost() { 
-                let cost = new Decimal(160)
-                return cost 
-            },
-            canAfford () { return player.o.points.gte(this.cost()) },
-            buy() { 
-                player.o.points = player.o.points.sub(this.cost())
-                player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
-            },
+            title: "Oak Minion V",
+            description: "Boosts first Oak Minion by 6%",
+            unlocked() { return hasMilestone("o", 0) },
+            cost: new Decimal("8"),
+        },
+        12: {
+            title: "Oak Minion VI",
+            description: "Boosts first Oak Minion by 11%",
+            unlocked() { return hasUpgrade(this.layer, 11) },
+            cost: new Decimal("16"),
+        },
+        13: {
+            title: "Oak Minion VII",
+            description: "Boosts first Oak Minion by 11%",
+            unlocked() { return hasUpgrade(this.layer, 12) },
+            cost: new Decimal("32"),
+        },
+        14: {
+            title: "Oak Minion VIII",
+            description: "Boosts first Oak Minion by 15%",
+            unlocked() { return hasUpgrade(this.layer, 13) },
+            cost: new Decimal("64"),
+        },
+        15: {
+            title: "Oak Minion IX",
+            description: "Boosts first Oak Minion by 15%",
+            unlocked() { return hasUpgrade(this.layer, 14) },
+            cost: new Decimal("128"),
+        },
+        21: {
+            title: "Oak Minion X",
+            description: "Boosts first Oak Minion by 21%",
+            unlocked() { return hasUpgrade(this.layer, 15) },
+            cost: new Decimal("256"),
+        },
+        22: {
+            title: "Oak Minion XI",
+            description: "Boosts first Oak Minion by 21%",
+            unlocked() { return hasUpgrade(this.layer, 21) },
+            cost: new Decimal("512"),
         },
     },
 })
