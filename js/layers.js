@@ -201,25 +201,21 @@ addLayer("eol", {
 		points: new Decimal(0),
         best: new Decimal(0),
     }},
-    color: "#66502e", // CHANGE MEresource: "honour", // Name of prestige currency
+    color: "#66502e", // CHANGE ME
     resource: "Enchanted Oak Logs", // Name of prestige currency
+    //This is honestly a fucking mess, but it works so /shrug
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-        baseResource: "Oak Logs",
-        baseAmount() { return player.o.points },
-        requires: new Decimal(160),                         // Determines the formula used for calculating prestige currency.
+    baseResource: "Oak Logs",
+    baseAmount() { return player.o.points },
+    requires: new Decimal(160),                         // Determines the formula used for calculating prestige currency.
     
-        gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
-            let mult = new Decimal(1)
-            if(player.eol.points.gte(1)) mult = mult.div(2)
-            return mult              // Factor in any bonuses multiplying gain here.
-        },
-        canBuyMax() {return false},
-
-        
-       
-
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        let mult = new Decimal(1)
+        if(player.eol.points.gte(1)) mult = mult.div(2)
+        return mult              // Factor in any bonuses multiplying gain here.
+    },
+    canBuyMax() {return false},
     row: 0, // Row the layer is in on the tree (0 is the first row)
-
     layerShown(){return hasMilestone("o", 5)},
 
     tabFormat: {
