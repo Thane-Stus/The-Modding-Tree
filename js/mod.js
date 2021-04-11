@@ -13,12 +13,12 @@ let modInfo = {
 // Set your version in num and name
 let VERSION = {
 	num: "0.1",
-	name: "Humble Beginnings",
+	name: "Oak and Cobble",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Write these when you actually get something playable`
+	<h3>v0.1, Oak and Cobble</h3><br>
+		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -40,8 +40,9 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(10000)
+	let gain = new Decimal(1)
 	if(hasUpgrade("o", 11)) {gain = gain.add(1)};
+	if(hasUpgrade("c", 11)) {gain = gain.add(1)};
 	return gain
 }
 

@@ -1,3 +1,7 @@
+0.2 Plans
+    Compactors and Skills
+    Add atleast 2 more layers to Foraging line
+
 Oak
     Rework Enchanted Oak Logs into a side layer, like Super Boosters/Generators from TPTR
         Each EOL should boost Oak Log gain by 5%
@@ -47,7 +51,8 @@ Cobblestone
         13 Golden Pickaxe
             Costs 5 Gold, requires Gold Mine unlocked
             x3 Cobblestone gain
-            x2 Work gain
+            +1 Work gain
+            This will come to all mining layers, add later when gold is implemented
         14 Furnace 8 Cobble
             Requires Rookie Pickaxe
             Unlocks Charcoal Minion upgrade in all layers that costs oak and boosts that layers auto gain
@@ -66,7 +71,7 @@ Cobblestone
         5 2500 Compactor 2000
         6 5000 ph
         7 10000 ph
-        8 25000 Unlocks Hyper Furnace Upgrade
+        8 25000 Unlocks Enchanted Furnace Upgrade
         9 40000 Haste Ring
             Add this whenever you add talisman stuff, which should function like achievements
         10 70000 Compactor 3000
