@@ -1,5 +1,5 @@
 let modInfo = {
-	name: "The Hypixel Skyblock Tree",
+	name: "The Skypixel Hyblock Tree",
 	id: "hypixeltree",
 	author: "Thane-Stus",
 	pointsName: "Work",
