@@ -483,9 +483,18 @@ addLayer("c", {
         //These should show in ALL layers, always costs Oak but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         31: {
-            title: "Small Cobblestone Storage",
-            description: "Boosts first Cobblestone Minion gain by 33%",
-            cost: new Decimal("64"),
+            fullDisplay() {return "<h3>Small Cobblestone Storage</h3><br>Boosts first Cobblestone Minion gain by 33%<br><br>Cost: 64 Oak Logs"},
+            canAfford() { 
+                let canAfford = false
+                let amount = player.o.points
+                if (amount.gte(256)) canAfford = true
+                return canAfford
+            },
+            onPurchase() {
+                let amount = player.o.points
+                if(amount.gte(64)) amount = amount.sub(64)
+                return amount
+            },
             unlocked() { return hasMilestone("o", 3) },
             effect() {
                 let eff = Decimal.add(1.33);
@@ -496,7 +505,7 @@ addLayer("c", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         32: {
-            fullDisplay() {return "<h3>Medium Cobblestone Storage</h3><br>Boosts first Cobblestone Minion gain by 33%<br><br>Cost: 8 Enchanted Cobblestone"},
+            fullDisplay() {return "<h3>Medium Cobblestone Storage</h3><br>Boosts first Cobblestone Minion gain by 33%<br><br>Cost: 8 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
                 let amount = player.ec.points
@@ -504,22 +513,22 @@ addLayer("c", {
                 return canAfford
             },
             onPurchase() {
-                let amount = player.ec.points
+                let amount = player.eol.points
                 if(amount.gte(8)) amount = amount.sub(8)
                 return amount
             },
             unlocked() { return hasMilestone("o", 6) },
         },
         33: {
-            fullDisplay() {return "<h3>Large Cobblestone Storage</h3><br>Boosts first Cobblestone Minion gain by 34%<br><br>Cost: 256 Enchanted Cobblestone"},
+            fullDisplay() {return "<h3>Large Cobblestone Storage</h3><br>Boosts first Cobblestone Minion gain by 34%<br><br>Cost: 256 Enchanted Oak Logs"},
             canAfford() { 
                 let canAfford = false
-                let amount = player.ec.points
+                let amount = player.eol.points
                 if (amount.gte(256)) canAfford = true
                 return canAfford
             },
             onPurchase() {
-                let amount = player.ec.points
+                let amount = player.eol.points
                 if(amount.gte(256)) amount = amount.sub(256)
                 return amount
             },
