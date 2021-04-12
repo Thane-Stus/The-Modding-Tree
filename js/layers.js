@@ -61,7 +61,7 @@ addLayer("o", {
         },
         1: {
             requirementDescription: "100 Oak Logs",
-            effectDescription: "(Coming Soon) Unlock Foraging Challenges",
+            effectDescription: "Unlocks Birch Park Layer",
             done() { return player.o.best.gte(100) },
         },
         2: {
@@ -375,7 +375,7 @@ addLayer("c", {
         },
         1: {
             requirementDescription: "100 Cobblestone",
-            effectDescription: "(Coming Soon) Unlock Mining Skill, Skills are Challenges",
+            effectDescription: "Unlocks Coal Mine Layer",
             done() { return player.c.best.gte(100) },
         },
         2: {
@@ -650,24 +650,6 @@ addLayer("ec", {
 //And add End Stone somewhere
 //Gravel, Ice, and Sand are low priority, probably best to leave out to reduce clutter
 
-addLayer("f", {
-    name: "Foraging", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "FOR", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    startData() { return {
-        unlocked: true,
-    }},
-    color: "#83622f", // CHANGE ME
-    resource: "Foraging Challenges", // Name of prestige currencye
-    type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    row: "side", // Row the layer is in on the tree (0 is the first row)
-
-    layerShown(){return true},
-    
-    tabFormat: [
-        "blank", 
-        "challenges",
-    ],
-})
+//Foraging
 
 //Mining
