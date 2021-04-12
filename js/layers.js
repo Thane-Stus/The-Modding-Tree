@@ -5,7 +5,7 @@ addLayer("o", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
-        total: new Decimal(0),
+        best: new Decimal(0),
     }},
     branches: ["eol"],
     color: "#83622f", // CHANGE ME
@@ -67,47 +67,47 @@ addLayer("o", {
         0: {
             requirementDescription: "50 Oak Logs",
             effectDescription: "Unlock Oak Minions, Minions are automation",
-            done() { return player.o.total.gte(50) },
+            done() { return player.o.best.gte(50) },
         },
         1: {
             requirementDescription: "100 Oak Logs",
             effectDescription: "Unlocks Birch Park Layer",
-            done() { return player.o.total.gte(100) },
+            done() { return player.o.best.gte(100) },
         },
         2: {
             requirementDescription: "250 Oak Logs",
             effectDescription: "ph", //Leaflet Armor in game, not sure what to do here for now
-            done() { return player.o.total.gte(250) },
+            done() { return player.o.best.gte(250) },
         },
         3: {
             requirementDescription: "500 Oak Logs",
             effectDescription: "Unlocks Small Storage Upgrade, This upgrade shows in all layers with Minions",
-            done() { return player.o.total.gte(500) },
+            done() { return player.o.best.gte(500) },
         },
         4: {
             requirementDescription: "1000 Oak Logs",
             effectDescription: "ph", //Forest Biome Stick in game, not sure what to put here
-            done() { return player.o.total.gte(1000) },
+            done() { return player.o.best.gte(1000) },
         },
         5: {
             requirementDescription: "2000 Oak Logs",
             effectDescription: "Unlocks Enchanted Oak Logs Layer",
-            done() { return player.o.total.gte(2000) },
+            done() { return player.o.best.gte(2000) },
         },
         6: {
             requirementDescription: "5000 Oak Logs",
             effectDescription: "Unlocks Medium Storage Upgrade",
-            done() { return player.o.total.gte(5000) },
+            done() { return player.o.best.gte(5000) },
         },
         7: {
             requirementDescription: "10000 Oak Logs",
             effectDescription: "ph", //Wood Affinity Talisman, Make a talisman layer that lets you buy talismans when you unlock this, this one should cost 8 enchanted wood or something, and add tier 2 and tier 3 talismans too
-            done() { return player.o.total.gte(10000) },
+            done() { return player.o.best.gte(10000) },
         },
         8: {
             requirementDescription: "30000 Oak Logs",
             effectDescription: "Unlocks Large Storage",
-            done() { return player.o.total.gte(30000) },
+            done() { return player.o.best.gte(30000) },
         },
     },
 
@@ -318,7 +318,7 @@ addLayer("b", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
-        total: new Decimal(0),
+        best: new Decimal(0),
     }},
     branches: ["o", "ebl"],
     color: "#83622f", // CHANGE ME
@@ -371,47 +371,47 @@ addLayer("b", {
         0: {
             requirementDescription: "50 Birch Logs",
             effectDescription: "Unlock Birch Minions, Minions are automation",
-            done() { return player.b.total.gte(50) },
+            done() { return player.b.best.gte(50) },
         },
         1: {
             requirementDescription: "100 Birch Logs",
             effectDescription: "Unlocks Spruce Woods", //Birch Leaves trade
-            done() { return player.b.total.gte(100) },
+            done() { return player.b.best.gte(100) },
         },
         2: {
             requirementDescription: "250 Birch Logs",
             effectDescription: "ph", //Birch Park Portal
-            done() { return player.b.total.gte(250) },
+            done() { return player.b.best.gte(250) },
         },
         3: {
             requirementDescription: "500 Birch Logs",
             effectDescription: "Unlocks Sculptor's Axe Upgrade",
-            done() { return player.b.total.gte(500) },
+            done() { return player.b.best.gte(500) },
         },
         4: {
             requirementDescription: "1000 Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Small Foraging Sack Upgrade", //Birch Forest Biome Stick in game, Going to put Foraging sack here, actually add it when Cow layer is added
-            done() { return player.b.total.gte(1000) },
+            done() { return player.b.best.gte(1000) },
         },
         5: {
             requirementDescription: "2000 Birch Logs",
             effectDescription: "Unlocks Enchanted Birch Logs Layer",
-            done() { return player.b.total.gte(2000) },
+            done() { return player.b.best.gte(2000) },
         },
         6: {
             requirementDescription: "5000 Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Mediumn Foraging Sack Upgrade",
-            done() { return player.b.total.gte(5000) },
+            done() { return player.b.best.gte(5000) },
         },
         7: {
             requirementDescription: "10000 Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Woodcutting Crystal",
-            done() { return player.b.total.gte(10000) },
+            done() { return player.b.best.gte(10000) },
         },
         8: {
             requirementDescription: "25000 Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Large Foraging Sack Upgrade",
-            done() { return player.b.total.gte(25000) },
+            done() { return player.b.best.gte(25000) },
         },
     },
 
@@ -628,7 +628,7 @@ addLayer("c", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
-        total: new Decimal(0),
+        best: new Decimal(0),
     }},
     branches: ["ec"],
     color: "#7f7f7f", // CHANGE ME
@@ -680,52 +680,52 @@ addLayer("c", {
         0: {
             requirementDescription: "50 Cobblestone",
             effectDescription: "Unlock Cobblestone Minion, Minions are Automation",
-            done() { return player.c.total.gte(50) },
+            done() { return player.c.best.gte(50) },
         },
         1: {
             requirementDescription: "100 Cobblestone",
             effectDescription: "Unlocks Coal Mine Layer",
-            done() { return player.c.total.gte(100) },
+            done() { return player.c.best.gte(100) },
         },
         2: {
             requirementDescription: "250 Cobblestone",
             effectDescription: "(Coming Soon) Unlocks Compactors, Compactors are automation for Enchanted items",
-            done() { return player.c.total.gte(250) },
+            done() { return player.c.best.gte(250) },
         },
         3: {
             requirementDescription: "1000 Cobblestone",
             effectDescription: "Unlocks Enchanted Cobblestone Layer",
-            done() { return player.c.total.gte(1000) },
+            done() { return player.c.best.gte(1000) },
         },
         4: {
             requirementDescription: "2500 Cobblestone",
             effectDescription: "(Coming Soon) Unlocks Compactor Upgrades",
-            done() { return player.c.total.gte(2500) },
+            done() { return player.c.best.gte(2500) },
         },
         5: {
             requirementDescription: "5000 Cobblestone",
             effectDescription: "ph", //Silverfish Pet ingame, pets will come eventually
-            done() { return player.c.total.gte(5000) },
+            done() { return player.c.best.gte(5000) },
         },
         6: {
             requirementDescription: "10000 Cobblestone",
             effectDescription: "ph", //Miners Outfit, armor will get added eventually
-            done() { return player.c.total.gte(10000) },
+            done() { return player.c.best.gte(10000) },
         },
         7: {
             requirementDescription: "25000 Cobblestone",
             effectDescription: "Unlocks Enchanted Furnace Upgrade",
-            done() { return player.c.total.gte(25000) },
+            done() { return player.c.best.gte(25000) },
         },
         8: {
             requirementDescription: "40000 Cobblestone",
             effectDescription: "ph", //Haste ring, add this when talismans get added
-            done() { return player.c.total.gte(40000) },
+            done() { return player.c.best.gte(40000) },
         },
         8: {
             requirementDescription: "70000 Cobblestone",
             effectDescription: "(Coming Soon) Unlocks more Compactor Upgrades",
-            done() { return player.c.total.gte(70000) },
+            done() { return player.c.best.gte(70000) },
         },
     },
 
