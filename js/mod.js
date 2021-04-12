@@ -5,18 +5,20 @@ let modInfo = {
 	pointsName: "Work",
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	
 	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "Oak and Cobble",
+	num: "0.1.5",
+	name: "Oak and Cobble and Birch",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1.5, Oak and Cobble and Birch</h3><br>
+	 	- Added Birch and Enchanted Birch layer
 	<h3>v0.1, Oak and Cobble</h3><br>
 		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers`
 
