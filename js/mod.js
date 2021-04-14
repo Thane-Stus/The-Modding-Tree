@@ -17,6 +17,8 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.2.1, The Forests for the Trees</h3><br>
+		- Fixed Work gain being way too high<br><br>
 	<h3>v0.2.0, The Forests for the Trees</h3><br>
 		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers<br>
 		- This save wont work with any made on v0.1 or v0.1.5<br><br>
@@ -45,7 +47,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(10000)
+	let gain = new Decimal(1)
 	if(hasUpgrade("ol", 11)) {gain = gain.add(1)};
 	if(hasUpgrade("cb", 11)) {gain = gain.add(1)};
 	return gain
