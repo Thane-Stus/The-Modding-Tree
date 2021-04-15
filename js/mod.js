@@ -12,16 +12,21 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2.1",
-	name: "The Forests for the Trees",
+	num: "0.3.0",
+	name: "The Forests for the Trees: Rewrite",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.3.0, The Forests for the Trees: Rewrite</h3><br>
+		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10<br>
+		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer<br>
+		- Temporarily removed Cobblestone Mine, will readd this next update alongside a few other mines<br>
+		- This version wont work with any saves made on v0.2.0 or v0.2.1<br><br>
 	<h3>v0.2.1, The Forests for the Trees</h3><br>
 		- Fixed Work gain being way too high<br><br>
 	<h3>v0.2.0, The Forests for the Trees</h3><br>
 		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers<br>
-		- This save wont work with any made on v0.1 or v0.1.5<br><br>
+		- This version wont work with any saves made on v0.1 or v0.1.5<br><br>
 	<h3>v0.1.5, Oak and Cobble and Birch</h3><br>
 	 	- Added Birch and Enchanted Birch layer<br><br>
 	<h3>v0.1, Oak and Cobble</h3><br>
@@ -47,9 +52,9 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(10000)
 	if(hasUpgrade("ol", 11)) {gain = gain.add(1)};
-	if(hasUpgrade("cb", 11)) {gain = gain.add(1)};
+//	if(hasUpgrade("cb", 11)) {gain = gain.add(1)};
 	return gain
 }
 
