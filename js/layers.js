@@ -69,7 +69,7 @@ addLayer("ol", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.ol.olench) + "</h2> Enchanted Oak Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -284,27 +284,31 @@ addLayer("ol", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Oak Log<br><br> Oak Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Oak Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Oak Logs")+"\n\
+                Amount: " + formatWhole(player.ol.olench))
+                return display;
             },
-            onClick() {
-                if (player.ol.points.gte(160)) {
-                    player.ol.points = player.ol.points.sub(160)
-                    player.ol.olench = player.ol.olench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.ol.olench = player.ol.olench.add(1)
+            },
+        },
     },
 })
 
@@ -379,7 +383,7 @@ addLayer("bl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.bl.blench) + "</h2> Enchanted Birch Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -587,27 +591,31 @@ addLayer("bl", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Birch Log<br><br> Birch Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Birch Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Birch Logs")+"\n\
+                Amount: " + formatWhole(player.bl.blench))
+                return display;
             },
-            onClick() {
-                if (player.bl.points.gte(160)) {
-                    player.bl.points = player.bl.points.sub(160)
-                    player.bl.blench = player.bl.blench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.bl.blench = player.bl.blench.add(1)
+            },
+        },
     },
 })
 
@@ -681,7 +689,7 @@ addLayer("sl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.sl.slench) + "</h2> Enchanted Spruce Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -884,27 +892,31 @@ addLayer("sl", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Spruce Log<br><br> Spruce Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Spruce Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Spruce Logs")+"\n\
+                Amount: " + formatWhole(player.sl.slench))
+                return display;
             },
-            onClick() {
-                if (player.sl.points.gte(160)) {
-                    player.sl.points = player.sl.points.sub(160)
-                    player.sl.slench = player.sl.slench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.sl.slench = player.sl.slench.add(1)
+            },
+        },
     },
 })
 
@@ -978,7 +990,7 @@ addLayer("dl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.dl.dlench) + "</h2> Enchanted Dark Oak Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1181,27 +1193,31 @@ addLayer("dl", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Dark Oak Log<br><br> Dark Oak Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Dark Oak Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Dark Oak Logs")+"\n\
+                Amount: " + formatWhole(player.dl.dlench))
+                return display;
             },
-            onClick() {
-                if (player.dl.points.gte(160)) {
-                    player.dl.points = player.dl.points.sub(160)
-                    player.dl.dlench = player.dl.dlench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.dl.dlench = player.dl.dlench.add(1)
+            },
+        },
     },
 })
 
@@ -1275,7 +1291,7 @@ addLayer("al", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.al.alench) + "</h2> Enchanted Acacia Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1478,27 +1494,31 @@ addLayer("al", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Acacia Log<br><br> Acacia Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Acacia Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Acacia Logs")+"\n\
+                Amount: " + formatWhole(player.al.alench))
+                return display;
             },
-            onClick() {
-                if (player.al.points.gte(160)) {
-                    player.al.points = player.al.points.sub(160)
-                    player.al.alench = player.al.alench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.al.alench = player.al.alench.add(1)
+            },
+        },
     },
 })
 
@@ -1573,7 +1593,7 @@ addLayer("jl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.jl.jlench) + "</h2> Enchanted Jungle Logs</div>"],
                 "blank",
-                "clickables",
+                "buyables",
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1785,27 +1805,31 @@ addLayer("jl", {
         },
     },
 
-    clickables: {
+    buyables: {
         rows: 1,
-        cols: 1,
-        11:{
-            display() {
-                return "<h3>Reset for +1 Enchated Jungle Log<br><br> Jungle Logs " + format(player[this.layer].points) + " / 160 </h3>"
-            },
+        cols: 1,  
+        11: {
+            title: "Enchanted Jungle Log",
             style: {   
                 "width": "180px",
                 "height": "120px",
             },
-            canClick() {
-                return player[this.layer].points.gte(160)
+            display() {
+                let data = tmp[this.layer].buyables[this.id]
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Birch Logs")+"\n\
+                Amount: " + formatWhole(player.jl.jlench))
+                return display;
             },
-            onClick() {
-                if (player.jl.points.gte(160)) {
-                    player.jl.points = player.jl.points.sub(160)
-                    player.jl.jlench = player.jl.jlench.add(1)
-                }
+            cost() { 
+                let cost = new Decimal(160)
+                return cost 
             },
-        },     
+            canAfford () { return player[this.layer].points.gte(this.cost()) },
+            buy() { 
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                player.jl.jlench = player.jl.jlench.add(1)
+            },
+        },
     },
 })
 

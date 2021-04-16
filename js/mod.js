@@ -17,6 +17,10 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.3.5, The Forests for the Trees: Rewrite</h3><br>
+		- Made the button for getting Enchanted stuff into a buyable<br>
+		- This should be save compatible with 0.3.0<br>
+		- Next update will have atleast 3 mine layers<br><br>
 	<h3>v0.3.0, The Forests for the Trees: Rewrite</h3><br>
 		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10<br>
 		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer<br>
