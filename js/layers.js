@@ -70,7 +70,7 @@ addLayer("ol", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.ol.olench) + "</h2> Enchanted Oak Logs</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -292,7 +292,7 @@ addLayer("ol", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -305,7 +305,7 @@ addLayer("ol", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -318,7 +318,7 @@ addLayer("ol", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -328,7 +328,7 @@ addLayer("ol", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
@@ -343,7 +343,7 @@ addLayer("ol", {
 
     buyables: {
         rows: 1,
-        cols: 1,  
+        cols: 1,
         11: {
             title: "Enchanted Oak Log",
             style: {   
@@ -441,7 +441,7 @@ addLayer("bl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.bl.blench) + "</h2> Enchanted Birch Logs</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -656,7 +656,7 @@ addLayer("bl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Birch Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -669,7 +669,7 @@ addLayer("bl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Birch Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -682,7 +682,7 @@ addLayer("bl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Birch Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -695,7 +695,7 @@ addLayer("bl", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Birch Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
@@ -807,7 +807,7 @@ addLayer("sl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.sl.slench) + "</h2> Enchanted Spruce Logs</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1017,7 +1017,7 @@ addLayer("sl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Spruce Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1030,7 +1030,7 @@ addLayer("sl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Spruce Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -1043,7 +1043,7 @@ addLayer("sl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Spruce Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -1056,7 +1056,7 @@ addLayer("sl", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Spruce Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
@@ -1168,7 +1168,7 @@ addLayer("dl", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.dl.dlench) + "</h2> Enchanted Dark Oak Logs</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1378,7 +1378,7 @@ addLayer("dl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Dark Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1391,7 +1391,7 @@ addLayer("dl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Dark Oak Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -1404,7 +1404,7 @@ addLayer("dl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Dark Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -1417,7 +1417,7 @@ addLayer("dl", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Dark Oak Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
@@ -1529,7 +1529,7 @@ addLayer("al", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.al.alench) + "</h2> Enchanted Acacia Logs</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -1739,7 +1739,7 @@ addLayer("al", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Acacia Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1752,7 +1752,7 @@ addLayer("al", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Acacia Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -1765,7 +1765,7 @@ addLayer("al", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Acacia Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -1778,7 +1778,7 @@ addLayer("al", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Acacia Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
@@ -1890,8 +1890,8 @@ addLayer("jl", {
             content: [
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.jl.jlench) + "</h2> Enchanted Jungle Logs</div>"],
-                "blank",
-                "buyables",
+                "blank",                ["row", [["buyable", 11]]],
+
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -2110,7 +2110,7 @@ addLayer("jl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Jungle Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -2123,7 +2123,7 @@ addLayer("jl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Jungle Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -2136,7 +2136,7 @@ addLayer("jl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Jungle Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -2149,7 +2149,7 @@ addLayer("jl", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Jungle Minion gain by 20%",
             cost: new Decimal("160"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {

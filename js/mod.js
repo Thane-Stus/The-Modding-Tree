@@ -12,11 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4.0",
+	num: "0.4.1",
 	name: "The Depths Bekon",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.4.1, The Depths Bekon</h3><br>
+		- Fixed some stuff, mostly things with the wrong names<br><br>
 	<h3>v0.4.0, The Depths Bekon</h3><br>
 		- Added Cobblestone and Coal layers<br>
 		- These two layers combines introduce several minion boosting upgrades to all other layers<br>

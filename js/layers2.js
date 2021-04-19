@@ -68,7 +68,7 @@ addLayer("cb", {
                 "main-display",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.cb.cbench) + "</h2> Enchanted Cobblestone</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -89,7 +89,7 @@ addLayer("cb", {
         },
         2: {
             requirementDescription: "250 Cobblestone",
-            effectDescription: "(Coming Soon) Unlocks Compactors, Compactors are automation for Enchanted items", //Auto Smelter, Compactor I
+            effectDescription: "Unlocks Compactors, Compactors are automation for Enchanted items", //Auto Smelter, Compactor I
             done() { return player.cb.best.gte(250) },
         },
         3: {
@@ -99,7 +99,7 @@ addLayer("cb", {
         },
         4: {
             requirementDescription: "2500 Cobblestone",
-            effectDescription: "(Coming Soon) Unlocks the first Compactor Upgrade", //Compactor, Compactor II
+            effectDescription: "Unlocks the first Compactor Upgrade", //Compactor, Compactor II
             done() { return player.cb.best.gte(2500) },
         },
         5: {
@@ -124,7 +124,7 @@ addLayer("cb", {
         },
         9: {
             requirementDescription: "70000 Cobblestone",
-            effectDescription: "(Coming Soon) Unlocks the second Compactor Upgrade",
+            effectDescription: "Unlocks the second Compactor Upgrade",
             done() { return player.cb.best.gte(70000) },
         },
     },
@@ -435,7 +435,7 @@ addLayer("co", {
         if (layers[resettingLayer].row > this.row) layerDataReset(this.layer, keep)
     },
 
-    layerShown(){return true},
+    layerShown(){return hasMilestone("cb", 1)},
 
     passiveGeneration() {
         let gain = new Decimal(0)
@@ -470,7 +470,7 @@ addLayer("co", {
                 "blank",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.co.cobench) + "</h2> Enchanted Coal Block</div>"],
                 "blank",
-                "buyables",
+                ["row", [["buyable", 11]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
