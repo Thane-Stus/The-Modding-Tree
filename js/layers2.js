@@ -6,7 +6,9 @@ addLayer("cb", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         cbench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["co"],
     color: "#83622f",
@@ -45,6 +47,36 @@ addLayer("cb", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evcbution Tree, because I have no idea what the hell im doing
+        let data = player.cb
+        if (hasUpgrade("cb", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("cb", 72)) mult *= 2
+            if (hasUpgrade("cb", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.cb.buyables[id].unlocked) continue
+                    if (tmp.cb.buyables[id].canAfford) {
+                        layers.cb.buyables[id].buy()
+
+                        if (!hasUpgrade("cb", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Cobblestone": {
             content: [
@@ -72,60 +104,61 @@ addLayer("cb", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Cobblestone",
+            requirementDescription: "50 Total Cobblestone",
             effectDescription: "Unlock Cobblestone Minion Upgrades, Minions are Automation",
-            done() { return player.cb.best.gte(50) },
+            done() { return player.cb.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Cobblestone",
+            requirementDescription: "100 Total Cobblestone",
             effectDescription: "Unlock the Coal Mine", //Stone Platform
-            done() { return player.cb.best.gte(100) },
+            done() { return player.cb.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Cobblestone",
-            effectDescription: "Unlocks Compactors, Compactors are automation for Enchanted items", //Auto Smelter, Compactor I
-            done() { return player.cb.best.gte(250) },
+            requirementDescription: "250 Total Cobblestone",
+            effectDescription: "Unlocks the Compactor I Upgrade, Compactors are automation for Enchanted items", //Auto Smelter, Compactor I
+            done() { return player.cb.total.gte(250) },
         },
         3: {
-            requirementDescription: "1000 Cobblestone",
+            requirementDescription: "1000 Total Cobblestone",
             effectDescription: "Unlocks Enchanted Cobblestone",
-            done() { return player.cb.best.gte(1000) },
+            done() { return player.cb.total.gte(1000) },
         },
         4: {
-            requirementDescription: "2500 Cobblestone",
-            effectDescription: "Unlocks the first Compactor Upgrade", //Compactor, Compactor II
-            done() { return player.cb.best.gte(2500) },
+            requirementDescription: "2500 Total Cobblestone",
+            effectDescription: "Unlocks the Compactor II Upgrade", //Compactor, Compactor II
+            done() { return player.cb.total.gte(2500) },
         },
         5: {
-            requirementDescription: "5000 Cobblestone",
+            requirementDescription: "5000 Total Cobblestone",
             effectDescription: "ph", //Pet Silverfish
-            done() { return player.cb.best.gte(5000) },
+            done() { return player.cb.total.gte(5000) },
         },
         6: {
-            requirementDescription: "10000 Cobblestone",
+            requirementDescription: "10000 Total Cobblestone",
             effectDescription: "ph", //Armor Miner's Outfit
-            done() { return player.cb.best.gte(10000) },
+            done() { return player.cb.total.gte(10000) },
         },
         7: {
-            requirementDescription: "25000 Cobblestone",
+            requirementDescription: "25000 Total Cobblestone",
             effectDescription: "Unlocks Hyper Furnace Upgrade",
-            done() { return player.cb.best.gte(25000) },
+            done() { return player.cb.total.gte(25000) },
         },
         8: {
-            requirementDescription: "40000 Cobblestone",
+            requirementDescription: "40000 Total Cobblestone",
             effectDescription: "ph", //Talisman Haste Ring
-            done() { return player.cb.best.gte(40000) },
+            done() { return player.cb.total.gte(40000) },
         },
         9: {
-            requirementDescription: "70000 Cobblestone",
-            effectDescription: "Unlocks the second Compactor Upgrade",
-            done() { return player.cb.best.gte(70000) },
+            requirementDescription: "70000 Total Cobblestone",
+            effectDescription: "Unlocks the Compactor III Upgrade",
+            done() { return player.cb.total.gte(70000) },
         },
     },
 
@@ -139,10 +172,10 @@ addLayer("cb", {
         },
         12: {
             title: "Promising Pickaxe",
-            description: "Boosts Ore gains based on current count for that Ore",
+            description: "Boosts Ore gains based on best Cobblestone count",
             cost: new Decimal("20"),
             effect() {
-                let eff = player[this.layer].points.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
+                eff = player[this.layer].best.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
                 return eff;
             },
             effectDisplay() { return format(this.effect())+"x" },
@@ -277,7 +310,7 @@ addLayer("cb", {
         //These should show in ALL layers, always costs Birch but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Cobblestone Storage",
+            title: "Small Storage",
             description: "Boosts first Cobblestone Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -293,7 +326,7 @@ addLayer("cb", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Cobblestone Storage",
+            title: "Medium Storage",
             description: "Boosts first Cobblestone Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -302,7 +335,7 @@ addLayer("cb", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Cobblestone Storage",
+            title: "Large Storage",
             description: "Boosts first Cobblestone Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -355,15 +388,45 @@ addLayer("cb", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Cobblestone Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Cobblestone per second",
+            unlocked() { return hasMilestone("cb", 2) },
+            cost: new Decimal("64"),
+            currencyDisplayName: "Cobblestone",
+            currencyInternalName: "points",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 9) },
+            cost: new Decimal("64"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
@@ -403,8 +466,10 @@ addLayer("co", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         coench: new Decimal(0),
         cobench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["co"],
     color: "#83622f",
@@ -443,6 +508,36 @@ addLayer("co", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evcoution Tree, because I have no idea what the hell im doing
+        let data = player.co
+        if (hasUpgrade("co", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("co", 72)) mult *= 2
+            if (hasUpgrade("co", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.co.buyables[id].unlocked) continue
+                    if (tmp.co.buyables[id].canAfford) {
+                        layers.co.buyables[id].buy()
+
+                        if (!hasUpgrade("co", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Coal": {
             content: [
@@ -474,55 +569,56 @@ addLayer("co", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Coal",
+            requirementDescription: "50 Total Coal",
             effectDescription: "Unlock Coal Minion Upgrades",
-            done() { return player.co.best.gte(50) },
+            done() { return player.co.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Coal",
+            requirementDescription: "100 Total Coal",
             effectDescription: "Unlock the Iron Mine", //Book Smelting Touch I
-            done() { return player.co.best.gte(100) },
+            done() { return player.co.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Coal",
+            requirementDescription: "250 Total Coal",
             effectDescription: "ph", //Potion Haste
-            done() { return player.co.best.gte(250) },
+            done() { return player.co.total.gte(250) },
         },
         3: {
-            requirementDescription: "1000 Coal",
+            requirementDescription: "1000 Total Coal",
             effectDescription: "Unlocks Enchanted Coal",
-            done() { return player.co.best.gte(1000) },
+            done() { return player.co.total.gte(1000) },
         },
         4: {
-            requirementDescription: "2500 Coal",
+            requirementDescription: "2500 Total Coal",
             effectDescription: "(Coming Soon) Unlocks Small Mining Sack", //Enchanted Charcoal is supposed to be here as well but I moved it to the Hyper Furnace ms/up in cb layer
-            done() { return player.co.best.gte(2500) },
+            done() { return player.co.total.gte(2500) },
         },
         5: {
-            requirementDescription: "5000 Coal",
+            requirementDescription: "5000 Total Coal",
             effectDescription: "(Coming Soon) Unlocks Medium Mining Sack", //Travel Scroll Gold Mine
-            done() { return player.co.best.gte(5000) },
+            done() { return player.co.total.gte(5000) },
         },
         6: {
-            requirementDescription: "10000 Coal",
+            requirementDescription: "10000 Total Coal",
             effectDescription: "Unlocks Enchanted Block of Coal",
-            done() { return player.co.best.gte(10000) },
+            done() { return player.co.total.gte(10000) },
         },
         7: {
-            requirementDescription: "25000 Coal",
+            requirementDescription: "25000 Total Coal",
             effectDescription: "(Coming Soon) Unlocks Enchanted Lava Bucket",
-            done() { return player.co.best.gte(25000) },
+            done() { return player.co.total.gte(25000) },
         },
         8: {
-            requirementDescription: "50000 Coal",
+            requirementDescription: "50000 Total Coal",
             effectDescription: "(Coming Soon) Unlocks Large Mining Sack", //Pet Wither Skeleton
-            done() { return player.co.best.gte(50000) },
+            done() { return player.co.total.gte(50000) },
         },
     },
 
@@ -642,7 +738,7 @@ addLayer("co", {
         //These should show in ALL layers, always costs Birch but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Coal Storage",
+            title: "Small Storage",
             description: "Boosts first Coal Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -658,7 +754,7 @@ addLayer("co", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Coal Storage",
+            title: "Medium Storage",
             description: "Boosts first Coal Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -667,7 +763,7 @@ addLayer("co", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Coal Storage",
+            title: "Large Storage",
             description: "Boosts first Coal Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -680,7 +776,7 @@ addLayer("co", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Coal Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -690,7 +786,7 @@ addLayer("co", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
+            description: "Boosts first Coal Minion gain by 20%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
@@ -703,7 +799,7 @@ addLayer("co", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 5%",
+            description: "Boosts first Coal Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
@@ -716,16 +812,46 @@ addLayer("co", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Cobblestone Minion gain by 20%",
-            cost: new Decimal("160"),
+            description: "Boosts first Coal Minion gain by 20%",
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Birch Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 

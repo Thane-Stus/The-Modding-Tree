@@ -12,11 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4.1",
-	name: "The Depths Bekon",
+	num: "0.5.0",
+	name: "Compactor I",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.5.0, Compactor I</h3><br>
+		- Added Compactors which are automation for Enchanted stuff.<br>
+		- Right now these go to level 3 and at that point will out produce the regular version of whatever.<br>
+		- Probably gonna rework these into a weird buyable system later, this is mostly just figuring out how autobuyers for buyables works.<br>
+		- Also tweaked some upgrade costs and made all milestones based on total instead of best.<br><br>
 	<h3>v0.4.1, The Depths Bekon</h3><br>
 		- Fixed some stuff, mostly things with the wrong names<br><br>
 	<h3>v0.4.0, The Depths Bekon</h3><br>

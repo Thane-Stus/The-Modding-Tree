@@ -6,7 +6,9 @@ addLayer("ol", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         olench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["bl"],
     color: "#83622f",
@@ -47,6 +49,36 @@ addLayer("ol", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
+        let data = player.ol
+        if (hasUpgrade("ol", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("ol", 72)) mult *= 2
+            if (hasUpgrade("ol", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.ol.buyables[id].unlocked) continue
+                    if (tmp.ol.buyables[id].canAfford) {
+                        layers.ol.buyables[id].buy()
+
+                        if (!hasUpgrade("ol", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Oak Logs": {
             content: [
@@ -55,6 +87,7 @@ addLayer("ol", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 11], ["upgrade", 12]]],
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
@@ -74,55 +107,56 @@ addLayer("ol", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Oak Logs",
+            requirementDescription: "50 Total Oak Logs",
             effectDescription: "Unlock Oak Minion Upgrades, Minions are Automation",
-            done() { return player.ol.best.gte(50) },
+            done() { return player.ol.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Oak Logs",
+            requirementDescription: "100 Total Oak Logs",
             effectDescription: "Unlock the Birch Park",
-            done() { return player.ol.best.gte(100) },
+            done() { return player.ol.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Oak Logs",
+            requirementDescription: "250 Total Oak Logs",
             effectDescription: "ph", //Armor Leaflet
-            done() { return player.ol.best.gte(250) },
+            done() { return player.ol.total.gte(250) },
         },
         3: {
-            requirementDescription: "500 Oak Logs",
+            requirementDescription: "500 Total Oak Logs",
             effectDescription: "Unlocks Small Storage Upgrade, This upgrade shows in all layers with Minions",
-            done() { return player.ol.best.gte(500) },
+            done() { return player.ol.total.gte(500) },
         },
         4: {
-            requirementDescription: "1000 Oak Logs",
+            requirementDescription: "1000 Total Oak Logs",
             effectDescription: "ph", //Biome Stick Forest
-            done() { return player.ol.best.gte(1000) },
+            done() { return player.ol.total.gte(1000) },
         },
         5: {
-            requirementDescription: "2000 Oak Logs",
+            requirementDescription: "2000 Total Oak Logs",
             effectDescription: "Unlocks Enchanted Oak Logs",
-            done() { return player.ol.best.gte(2000) },
+            done() { return player.ol.total.gte(2000) },
         },
         6: {
-            requirementDescription: "5000 Oak Logs",
+            requirementDescription: "5000 Total Oak Logs",
             effectDescription: "Unlocks Medium Storage Upgrade",
-            done() { return player.ol.best.gte(5000) },
+            done() { return player.ol.total.gte(5000) },
         },
         7: {
-            requirementDescription: "10000 Oak Logs",
+            requirementDescription: "10000 Total Oak Logs",
             effectDescription: "ph", //Talisman Wood Affinity
-            done() { return player.ol.best.gte(10000) },
+            done() { return player.ol.total.gte(10000) },
         },
         8: {
-            requirementDescription: "30000 Oak Logs",
+            requirementDescription: "30000 Total Oak Logs",
             effectDescription: "Unlocks Large Storage",
-            done() { return player.ol.best.gte(30000) },
+            done() { return player.ol.total.gte(30000) },
         },
     },
 
@@ -136,10 +170,10 @@ addLayer("ol", {
         },
         12: {
             title: "Promising Axe",
-            description: "Boosts Log gains based on current count for that Log",
+            description: "Boosts All Log gains based on best Oak Log count",
             cost: new Decimal("20"),
             effect() {
-                let eff = player[this.layer].points.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
+                eff = player[this.layer].best.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
                 return eff;
             },
             effectDisplay() { return format(this.effect())+"x" },
@@ -257,7 +291,7 @@ addLayer("ol", {
         //These should show in ALL layers, always costs Oak but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Oak Storage",
+            title: "Small Storage",
             description: "Boosts first Oak Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -270,7 +304,7 @@ addLayer("ol", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Oak Storage",
+            title: "Medium Storage",
             description: "Boosts first Oak Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -279,7 +313,7 @@ addLayer("ol", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Oak Storage",
+            title: "Large Storage",
             description: "Boosts first Oak Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -329,15 +363,45 @@ addLayer("ol", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Oak Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Oak Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
@@ -377,7 +441,9 @@ addLayer("bl", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         blench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["sl"],
     color: "#83622f",
@@ -418,6 +484,36 @@ addLayer("bl", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evblution Tree, because I have no idea what the hell im doing
+        let data = player.bl
+        if (hasUpgrade("bl", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("bl", 72)) mult *= 2
+            if (hasUpgrade("bl", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.bl.buyables[id].unlocked) continue
+                    if (tmp.bl.buyables[id].canAfford) {
+                        layers.bl.buyables[id].buy()
+
+                        if (!hasUpgrade("bl", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Birch Logs": {
             content: [
@@ -445,55 +541,56 @@ addLayer("bl", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Birch Logs",
+            requirementDescription: "50 Total Birch Logs",
             effectDescription: "Unlock Birch Minions, Minions are automation",
-            done() { return player.bl.best.gte(50) },
+            done() { return player.bl.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Birch Logs",
+            requirementDescription: "100 Total Birch Logs",
             effectDescription: "Unlock the Spruce Woods",
-            done() { return player.bl.best.gte(100) },
+            done() { return player.bl.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Birch Logs",
+            requirementDescription: "250 Total Birch Logs",
             effectDescription: "ph", //Portal Birch Park
-            done() { return player.bl.best.gte(250) },
+            done() { return player.bl.total.gte(250) },
         },
         3: {
-            requirementDescription: "500 Birch Logs",
+            requirementDescription: "500 Total Birch Logs",
             effectDescription: "Unlocks Sculptor's Axe Upgrade",
-            done() { return player.bl.best.gte(500) },
+            done() { return player.bl.total.gte(500) },
         },
         4: {
-            requirementDescription: "1000 Birch Logs",
+            requirementDescription: "1000 Total Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Small Foraging Sack Upgrade", //Biome Stick Birch Forest, Putting Small Foraging Sack here as filler since I probably wont be adding biome sticks
-            done() { return player.bl.best.gte(1000) },
+            done() { return player.bl.total.gte(1000) },
         },
         5: {
-            requirementDescription: "2000 Birch Logs",
+            requirementDescription: "2000 Total Birch Logs",
             effectDescription: "Unlocks Enchanted Birch Logs",
-            done() { return player.bl.best.gte(2000) },
+            done() { return player.bl.total.gte(2000) },
         },
         6: {
-            requirementDescription: "5000 Birch Logs",
+            requirementDescription: "5000 Total Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Mediumn Foraging Sack Upgrade",
-            done() { return player.bl.best.gte(5000) },
+            done() { return player.bl.total.gte(5000) },
         },
         7: {
-            requirementDescription: "10000 Birch Logs",
+            requirementDescription: "10000 Total Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Woodcutting Crystal",
-            done() { return player.bl.best.gte(10000) },
+            done() { return player.bl.total.gte(10000) },
         },
         8: {
-            requirementDescription: "25000 Birch Logs",
+            requirementDescription: "25000 Total Birch Logs",
             effectDescription: "(Coming Soon) Unlocks Large Foraging Sack Upgrade",
-            done() { return player.bl.best.gte(25000) },
+            done() { return player.bl.total.gte(25000) },
         },
     },
 
@@ -618,7 +715,7 @@ addLayer("bl", {
         //These should show in ALL layers, always costs Birch but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Birch Storage",
+            title: "Small Storage",
             description: "Boosts first Birch Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -634,7 +731,7 @@ addLayer("bl", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Birch Storage",
+            title: "Medium Storage",
             description: "Boosts first Birch Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -643,7 +740,7 @@ addLayer("bl", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Birch Storage",
+            title: "Large Storage",
             description: "Boosts first Birch Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -696,15 +793,45 @@ addLayer("bl", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Birch Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Birch Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
@@ -744,7 +871,9 @@ addLayer("sl", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         slench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["dl"],
     color: "#83622f",
@@ -785,6 +914,36 @@ addLayer("sl", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evslution Tree, because I have no idea what the hell im doing
+        let data = player.sl
+        if (hasUpgrade("sl", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("sl", 72)) mult *= 2
+            if (hasUpgrade("sl", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.sl.buyables[id].unlocked) continue
+                    if (tmp.sl.buyables[id].canAfford) {
+                        layers.sl.buyables[id].buy()
+
+                        if (!hasUpgrade("sl", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Spruce Logs": {
             content: [
@@ -811,55 +970,56 @@ addLayer("sl", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Spruce Logs",
+            requirementDescription: "50 Total Spruce Logs",
             effectDescription: "Unlock Spruce Minions, Minions are automation",
-            done() { return player.sl.best.gte(50) },
+            done() { return player.sl.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Spruce Logs",
+            requirementDescription: "100 Total Spruce Logs",
             effectDescription: "Unlock the Dark Thicket",
-            done() { return player.sl.best.gte(100) },
+            done() { return player.sl.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Spruce Logs",
+            requirementDescription: "250 Total Spruce Logs",
             effectDescription: "ph", //Portal Spruce Woods
-            done() { return player.sl.best.gte(250) },
+            done() { return player.sl.total.gte(250) },
         },
         3: {
-            requirementDescription: "1000 Spruce Logs",
+            requirementDescription: "1000 Total Spruce Logs",
             effectDescription: "ph", //Biome Stick Taiga
-            done() { return player.sl.best.gte(1000) },
+            done() { return player.sl.total.gte(1000) },
         },
         4: {
-            requirementDescription: "2000 Spruce Logs",
+            requirementDescription: "2000 Total Spruce Logs",
             effectDescription: "Unlocks Enchanted Spruce Logs",
-            done() { return player.sl.best.gte(2000) },
+            done() { return player.sl.total.gte(2000) },
         },
         5: {
-            requirementDescription: "5000 Spruce Logs",
+            requirementDescription: "5000 Total Spruce Logs",
             effectDescription: "ph", //Sawmill
-            done() { return player.sl.best.gte(5000) },
+            done() { return player.sl.total.gte(5000) },
         },
         6: {
-            requirementDescription: "10000 Spruce Logs",
+            requirementDescription: "10000 Total Spruce Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.sl.best.gte(10000) },
+            done() { return player.sl.total.gte(10000) },
         },
         7: {
-            requirementDescription: "25000 Spruce Logs",
+            requirementDescription: "25000 Total Spruce Logs",
             effectDescription: "ph", //Pet Wolf
-            done() { return player.sl.best.gte(25000) },
+            done() { return player.sl.total.gte(25000) },
         },
         8: {
-            requirementDescription: "50000 Spruce Logs",
+            requirementDescription: "50000 Total Spruce Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.sl.best.gte(50000) },
+            done() { return player.sl.total.gte(50000) },
         },
     },
 
@@ -979,7 +1139,7 @@ addLayer("sl", {
         //These should show in ALL layers, always costs Spruce but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Spruce Storage",
+            title: "Small Storage",
             description: "Boosts first Spruce Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -995,7 +1155,7 @@ addLayer("sl", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Spruce Storage",
+            title: "Medium Storage",
             description: "Boosts first Spruce Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -1004,7 +1164,7 @@ addLayer("sl", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Spruce Storage",
+            title: "Large Storage",
             description: "Boosts first Spruce Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -1057,15 +1217,45 @@ addLayer("sl", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Spruce Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Spruce Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
@@ -1105,7 +1295,9 @@ addLayer("dl", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         dlench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["al"],
     color: "#83622f",
@@ -1146,6 +1338,36 @@ addLayer("dl", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evdlution Tree, because I have no idea what the hell im doing
+        let data = player.dl
+        if (hasUpgrade("dl", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("dl", 72)) mult *= 2
+            if (hasUpgrade("dl", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.dl.buyables[id].unlocked) continue
+                    if (tmp.dl.buyables[id].canAfford) {
+                        layers.dl.buyables[id].buy()
+
+                        if (!hasUpgrade("dl", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Dark Oak Logs": {
             content: [
@@ -1172,55 +1394,56 @@ addLayer("dl", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Dark Oak Logs",
+            requirementDescription: "50 Total Dark Oak Logs",
             effectDescription: "Unlock Dark Oak Minions",
-            done() { return player.dl.best.gte(50) },
+            done() { return player.dl.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Dark Oak Logs",
+            requirementDescription: "100 Total Dark Oak Logs",
             effectDescription: "Unlocks the Savanna Woodland",
-            done() { return player.dl.best.gte(100) },
+            done() { return player.dl.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Dark Oak Logs",
+            requirementDescription: "250 Total Dark Oak Logs",
             effectDescription: "ph", //Portal Dark Thicket
-            done() { return player.dl.best.gte(250) },
+            done() { return player.dl.total.gte(250) },
         },
         3: {
-            requirementDescription: "1000 Dark Oak Logs",
+            requirementDescription: "1000 Total Dark Oak Logs",
             effectDescription: "ph", //Biome Stick Roofed Forest
-            done() { return player.dl.best.gte(1000) },
+            done() { return player.dl.total.gte(1000) },
         },
         4: {
-            requirementDescription: "2000 Dark Oak Logs",
+            requirementDescription: "2000 Total Dark Oak Logs",
             effectDescription: "Unlocks Enchanted Dark Oak Logs",
-            done() { return player.dl.best.gte(2000) },
+            done() { return player.dl.total.gte(2000) },
         },
         5: {
-            requirementDescription: "5000 Dark Oak Logs",
+            requirementDescription: "5000 Total Dark Oak Logs",
             effectDescription: "ph", //Island Stick Roofed Forest
-            done() { return player.dl.best.gte(5000) },
+            done() { return player.dl.total.gte(5000) },
         },
         6: {
-            requirementDescription: "10000 Dark Oak Logs",
+            requirementDescription: "10000 Total Dark Oak Logs",
             effectDescription: "ph", //Enchanted Book Growth IV
-            done() { return player.dl.best.gte(10000) },
+            done() { return player.dl.total.gte(10000) },
         },
         7: {
-            requirementDescription: "15000 Dark Oak Logs",
+            requirementDescription: "15000 Total Dark Oak Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.dl.best.gte(15000) },
+            done() { return player.dl.total.gte(15000) },
         },
         8: {
-            requirementDescription: "25000 Dark Oak Logs",
+            requirementDescription: "25000 Total Dark Oak Logs",
             effectDescription: "ph", //Armor Growth
-            done() { return player.dl.best.gte(25000) },
+            done() { return player.dl.total.gte(25000) },
         },
     },
 
@@ -1340,7 +1563,7 @@ addLayer("dl", {
         //These should show in ALL layers, always costs Dark Oak but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Dark Oak Storage",
+            title: "Small Storage",
             description: "Boosts first Dark Oak Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -1356,7 +1579,7 @@ addLayer("dl", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Dark Oak Storage",
+            title: "Medium Storage",
             description: "Boosts first Dark Oak Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -1365,7 +1588,7 @@ addLayer("dl", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Dark Oak Storage",
+            title: "Large Storage",
             description: "Boosts first Dark Oak Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -1428,6 +1651,36 @@ addLayer("dl", {
             currencyInternalName: "points",
             currencyLocation() { return player.ol },
         },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Dark Oak Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
     },
 
     buyables: {
@@ -1466,7 +1719,9 @@ addLayer("al", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         alench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["dl"],
     color: "#83622f",
@@ -1507,6 +1762,36 @@ addLayer("al", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evalution Tree, because I have no idea what the hell im doing
+        let data = player.al
+        if (hasUpgrade("al", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("al", 72)) mult *= 2
+            if (hasUpgrade("al", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.al.buyables[id].unlocked) continue
+                    if (tmp.al.buyables[id].canAfford) {
+                        layers.al.buyables[id].buy()
+
+                        if (!hasUpgrade("al", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Acacia Logs": {
             content: [
@@ -1533,55 +1818,56 @@ addLayer("al", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Acacia Logs",
+            requirementDescription: "50 Total Acacia Logs",
             effectDescription: "Unlock Acacia Minions",
-            done() { return player.al.best.gte(50) },
+            done() { return player.al.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Acacia Logs",
+            requirementDescription: "100 Total Acacia Logs",
             effectDescription: "Unlocks the Jungle Island",
-            done() { return player.al.best.gte(100) },
+            done() { return player.al.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Acacia Logs",
+            requirementDescription: "250 Total Acacia Logs",
             effectDescription: "ph", //Portal Savanna Woodland
-            done() { return player.al.best.gte(250) },
+            done() { return player.al.total.gte(250) },
         },
         3: {
-            requirementDescription: "500 Acacia Logs",
+            requirementDescription: "500 Total Acacia Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.al.best.gte(500) },
+            done() { return player.al.total.gte(500) },
         },
         4: {
-            requirementDescription: "1000 Acacia Logs",
+            requirementDescription: "1000 Total Acacia Logs",
             effectDescription: "ph", //Biome Stick Savanna Woodland
-            done() { return player.al.best.gte(1000) },
+            done() { return player.al.total.gte(1000) },
         },
         5: {
-            requirementDescription: "2000 Acacia Logs",
+            requirementDescription: "2000 Total Acacia Logs",
             effectDescription: "Unlocks Enchanted Acacia Logs",
-            done() { return player.al.best.gte(2000) },
+            done() { return player.al.total.gte(2000) },
         },
         6: {
-            requirementDescription: "5000 Acacia Logs",
+            requirementDescription: "5000 Total Acacia Logs",
             effectDescription: "ph", //Weapon Savanna Bow
-            done() { return player.al.best.gte(5000) },
+            done() { return player.al.total.gte(5000) },
         },
         7: {
-            requirementDescription: "10000 Acacia Logs",
+            requirementDescription: "10000 Total Acacia Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.al.best.gte(10000) },
+            done() { return player.al.total.gte(10000) },
         },
         8: {
-            requirementDescription: "25000 Acacia Logs",
+            requirementDescription: "25000 Total Acacia Logs",
             effectDescription: "ph", //Repelling Candle
-            done() { return player.al.best.gte(25000) },
+            done() { return player.al.total.gte(25000) },
         },
     },
 
@@ -1701,7 +1987,7 @@ addLayer("al", {
         //These should show in ALL layers, always costs Acacia but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Acacia Storage",
+            title: "Small Storage",
             description: "Boosts first Acacia Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -1717,7 +2003,7 @@ addLayer("al", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Acacia Storage",
+            title: "Medium Storage",
             description: "Boosts first Acacia Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -1726,7 +2012,7 @@ addLayer("al", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Acacia Storage",
+            title: "Large Storage",
             description: "Boosts first Acacia Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -1779,15 +2065,45 @@ addLayer("al", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Acacia Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Acacia Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
@@ -1827,7 +2143,9 @@ addLayer("jl", {
         unlocked: true,
 		points: new Decimal(0),
         best: new Decimal(0),
+        total: new Decimal(0),
         jlench: new Decimal(0),
+        autotime: 0,
     }},
     branches: ["al"],
     color: "#83622f",
@@ -1868,6 +2186,36 @@ addLayer("jl", {
         return gain
     },
 
+    update(diff){ //I borrowed this from pg132s Evjlution Tree, because I have no idea what the hell im doing
+        let data = player.jl
+        if (hasUpgrade("jl", 71)) {
+            let mult = 1
+
+            if (hasUpgrade("jl", 72)) mult *= 2
+            if (hasUpgrade("jl", 73)) mult *= 2
+
+            data.autotime += diff * mult
+            
+            if (data.autotime > 10) data.autotime = 10
+            if (data.autotime > 1) {
+                data.autotime += -1
+                list = [11]
+
+                for (i = 0; i < list.length; i++){
+                    let id = list[i]
+                    if (!tmp.jl.buyables[id].unlocked) continue
+                    if (tmp.jl.buyables[id].canAfford) {
+                        layers.jl.buyables[id].buy()
+
+                        if (!hasUpgrade("jl", 71)) break
+                    }
+                }
+            }
+        } else {
+            data.autotime = 0
+        }
+    },
+
     tabFormat: {
         "Jungle Logs": {
             content: [
@@ -1895,55 +2243,56 @@ addLayer("jl", {
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
+                ["row", [["upgrade", 71], ["upgrade", 72], ["upgrade", 73]]],
             ]
         },
     },
 
     milestones: {
         0: {
-            requirementDescription: "50 Jungle Logs",
+            requirementDescription: "50 Total Jungle Logs",
             effectDescription: "Unlock Jungle Minions",
-            done() { return player.jl.best.gte(50) },
+            done() { return player.jl.total.gte(50) },
         },
         1: {
-            requirementDescription: "100 Jungle Logs",
+            requirementDescription: "100 Total Jungle Logs",
             effectDescription: "ph", //Trade Jungle Leaves
-            done() { return player.jl.best.gte(100) },
+            done() { return player.jl.total.gte(100) },
         },
         2: {
-            requirementDescription: "250 Jungle Logs",
+            requirementDescription: "250 Total Jungle Logs",
             effectDescription: "ph", //Portal Jungle Island
-            done() { return player.jl.best.gte(250) },
+            done() { return player.jl.total.gte(250) },
         },
         3: {
-            requirementDescription: "500 Jungle Logs",
+            requirementDescription: "500 Total Jungle Logs",
             effectDescription: "ph", //Trade Vines
-            done() { return player.jl.best.gte(500) },
+            done() { return player.jl.total.gte(500) },
         },
         4: {
-            requirementDescription: "1000 Jungle Logs",
+            requirementDescription: "1000 Total Jungle Logs",
             effectDescription: "ph", //Biome Stick Jungle
-            done() { return player.jl.best.gte(1000) },
+            done() { return player.jl.total.gte(1000) },
         },
         5: {
-            requirementDescription: "2000 Jungle Logs",
+            requirementDescription: "2000 Total Jungle Logs",
             effectDescription: "Unlocks Enchanted Jungle Logs",
-            done() { return player.jl.best.gte(2000) },
+            done() { return player.jl.total.gte(2000) },
         },
         6: {
-            requirementDescription: "5000 Jungle Logs",
+            requirementDescription: "5000 Total Jungle Logs",
             effectDescription: "Unlocks Jungle Axe Upgrade",
-            done() { return player.jl.best.gte(5000) },
+            done() { return player.jl.total.gte(5000) },
         },
         7: {
-            requirementDescription: "10000 Jungle Logs",
+            requirementDescription: "10000 Total Jungle Logs",
             effectDescription: "ph", //XP Foraging
-            done() { return player.jl.best.gte(10000) },
+            done() { return player.jl.total.gte(10000) },
         },
         8: {
-            requirementDescription: "25000 Jungle Logs",
+            requirementDescription: "25000 Total Jungle Logs",
             effectDescription: "ph", //Pet Ocelot
-            done() { return player.jl.best.gte(25000) },
+            done() { return player.jl.total.gte(25000) },
         },
     },
 
@@ -2072,7 +2421,7 @@ addLayer("jl", {
         //These should show in ALL layers, always costs Jungle but has different names because you need a new one for each Minion
         //The effect from the Small storage directly boosts the base minion
         51: {
-            title: "Small Jungle Storage",
+            title: "Small Storage",
             description: "Boosts first Jungle Minion gain by 33%",
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
@@ -2088,7 +2437,7 @@ addLayer("jl", {
         },
         //Medium and Large storage cost Enchanted Oak and boost Small Storage effect
         52: {
-            title: "Medium Jungle Storage",
+            title: "Medium Storage",
             description: "Boosts first Jungle Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 6) },
             cost: new Decimal("8"),
@@ -2097,7 +2446,7 @@ addLayer("jl", {
             currencyLocation() { return player.ol },
         },
         53: {
-            title: "Large Jungle Storage",
+            title: "Large Storage",
             description: "Boosts first Jungle Minion gain by 33%",
             unlocked() { return hasMilestone("ol", 8) },
             cost: new Decimal("256"),
@@ -2150,15 +2499,45 @@ addLayer("jl", {
         64: {
             title: "Enchanted Charcoal",
             description: "Boosts first Jungle Minion gain by 20%",
-            cost: new Decimal("160"),
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
                 let eff = Decimal.add(0.20);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
+        },
+
+        71: {
+            title: "Compactor I",
+            description: "Gain 1 Enchanted Jungle Log per second",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("8"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        72: {
+            title: "Compactor II",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("16"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
+        },
+
+        73: {
+            title: "Compactor III",
+            description: "Boosts Compactor I",
+            unlocked() { return hasMilestone("cb", 4) },
+            cost: new Decimal("32"),
+            currencyDisplayName: "Enchanted Cobblestone",
+            currencyInternalName: "cbench",
+            currencyLocation() { return player.cb },
         },
     },
 
