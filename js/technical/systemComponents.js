@@ -124,6 +124,16 @@ var systemComponents = {
         <br>
         Original idea by papyrus (on discord)
 		<br><br>
+		Credits
+		<br>
+		A list of people whose code I borrowed or referenced
+		<br>
+		pg132, The Prestige Chain and Evolution
+		<br>
+		denisolenison, The Leveling Tree
+		<br>
+		ducdat0507, The Prestreestuck and The Dynas Tree
+		<br><br>
 		<div class="link" onclick="showTab('changelog-tab')">Changelog</div><br>
         <span v-if="modInfo.discordLink"><a class="link" v-bind:href="modInfo.discordLink" target="_blank">{{modInfo.discordName}}</a><br></span>
         <a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>

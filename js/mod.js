@@ -1,7 +1,7 @@
 let modInfo = {
 	name: "The Skypixel Hyblock Tree",
 	id: "hypixeltree",
-	author: "Thane-Stus",
+	author: "Thane-Stus#0893",
 	pointsName: "Work",
 	discordName: "",
 	discordLink: "",
@@ -18,7 +18,8 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.6.5, Compactor II</h3><br>
-		- Lowered minion output and bonuses from some minion upgrades.<br><br>
+		- Lowered minion output and bonuses from some minion upgrades.<br>
+		- Next update is more Mining levels.<br><br>
 	<h3>v0.6.0, Compactor II</h3><br>
 		- Reworked Compactors into their own side layer.<br>
 		- Next update is going to be more mine levels, atleast up to diamond.<br>
