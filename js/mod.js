@@ -30,26 +30,26 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Probably gonna rework these into a weird buyable system later, this is mostly just figuring out how autobuyers for buyables works.<br>
 		- Also tweaked some upgrade costs and made all milestones based on total instead of best.<br><br>
 	<h3>v0.4.5, The Depths Bekon</h3><br>
-		- Fixed some stuff, mostly things with the wrong names<br><br>
+		- Fixed some stuff, mostly things with the wrong names.<br><br>
 	<h3>v0.4.0, The Depths Bekon</h3><br>
-		- Added Cobblestone and Coal layers<br>
-		- These two layers combines introduce several minion boosting upgrades to all other layers<br>
-		- This should be save compatible with v0.3.0 and v0.3.5<br><br>
+		- Added Cobblestone and Coal layers.<br>
+		- These two layers introduce several minion boosting upgrades to all other layers.<br>
+		- This should be save compatible with v0.3.0 and v0.3.5.<br><br>
 	<h3>v0.3.5, The Forests for the Trees: Rewrite 2</h3><br>
-		- Made the button for getting Enchanted stuff into a buyable<br>
-		- This should be save compatible with 0.3.0<br><br>
+		- Made the button for getting Enchanted stuff into a buyable.<br>
+		- This should be save compatible with 0.3.0.<br><br>
 	<h3>v0.3.0, The Forests for the Trees: Rewrite</h3><br>
-		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10<br>
-		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer<br>
-		- Temporarily removed Cobblestone Mine, will readd this next update alongside a few other mines<br>
-		- This version wont work with any saves made on v0.2.0 or v0.2.0<br><br>
+		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10.<br>
+		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer.<br>
+		- Temporarily removed Cobblestone Mine, will readd this next update alongside a few other mines.<br>
+		- This version wont work with any saves made on v0.2.0 or v0.2.0.<br><br>
 	<h3>v0.2.0, The Forests for the Trees</h3><br>
-		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers<br>
-		- This version wont work with any saves made on v0.1 or v0.1.5<br><br>
+		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers.<br>
+		- This version wont work with any saves made on v0.1 or v0.1.5.<br><br>
 	<h3>v0.1.5, Oak and Cobble and Birch</h3><br>
-	 	- Added Birch and Enchanted Birch layer<br><br>
+	 	- Added Birch and Enchanted Birch layer.<br><br>
 	<h3>v0.1, Oak and Cobble</h3><br>
-		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers`
+		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers.`
 
 let winText = `If you're seeing this then I probably messed up something. Please let me know if you do see this thanks.`
 
