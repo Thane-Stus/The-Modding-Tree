@@ -15,16 +15,6 @@ addLayer("c", {
     row: "side",
     layerShown(){return hasMilestone("cb", 2)},
 
-//    tabFormat: [
-//        ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.c.comslots) + "</h2> Free Compactor Slots</div>"],
-//        "blank",
-//        "upgrades",
-//        "blank",
-//        "respec-button",
-//        ["row", [["buyable", 11]]],
-//        ["row", [["buyable", 21], ["buyable", 22]]],
-//    ],
-
     microtabs: {
         compactortabs: {
             "Foraging": {

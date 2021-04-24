@@ -164,12 +164,12 @@ addLayer("cb", {
         cols: 5,
         11: {
             title: "Rookie Pickaxe",
-            description: "x2 All Ore Gains and +1 Work Gain",
+            description: "x2 All Mining Gains and +1 Work Gain",
             cost: new Decimal("10"),
         },
         12: {
             title: "Promising Pickaxe",
-            description: "Boosts Ore gains based on best Cobblestone count",
+            description: "Boosts Mining gains based on best Cobblestone count",
             cost: new Decimal("20"),
             effect() {
                 eff = player[this.layer].best.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
