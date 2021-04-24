@@ -47,13 +47,10 @@ addLayer("cb", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evcbution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.cb
-        if (hasUpgrade("cb", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("cb", 72)) mult *= 2
-            if (hasUpgrade("cb", 73)) mult *= 2
+        if (getBuyableAmount("c", 31).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 31))
 
             data.autotime += diff * mult
             
@@ -66,9 +63,9 @@ addLayer("cb", {
                     let id = list[i]
                     if (!tmp.cb.buyables[id].unlocked) continue
                     if (tmp.cb.buyables[id].canAfford) {
-                        layers.cb.buyables[id].buy()
+                        layers.cb.buyables[11].buy()
 
-                        if (!hasUpgrade("cb", 71)) break
+                        if (!getBuyableAmount("c", 31).gte(1)) break
                     }
                 }
             }
@@ -122,7 +119,7 @@ addLayer("cb", {
         },
         2: {
             requirementDescription: "250 Total Cobblestone",
-            effectDescription: "Unlocks the Compactor I Upgrade, Compactors are automation for Enchanted items", //Auto Smelter, Compactor I
+            effectDescription: "Unlocks the Compactor layer and 1 Compactor Slot, this is automation for Enchanted items", //Auto Smelter
             done() { return player.cb.total.gte(250) },
         },
         3: {
@@ -132,7 +129,7 @@ addLayer("cb", {
         },
         4: {
             requirementDescription: "2500 Total Cobblestone",
-            effectDescription: "Unlocks the Compactor II Upgrade", //Compactor, Compactor II
+            effectDescription: "Increases Compactor Slots by 1", //Compactor
             done() { return player.cb.total.gte(2500) },
         },
         5: {
@@ -142,7 +139,7 @@ addLayer("cb", {
         },
         6: {
             requirementDescription: "10000 Total Cobblestone",
-            effectDescription: "ph", //Armor Miner's Outfit
+            effectDescription: "Increases Compactor Slots by 2", //Armor Miner's Outfit
             done() { return player.cb.total.gte(10000) },
         },
         7: {
@@ -152,12 +149,12 @@ addLayer("cb", {
         },
         8: {
             requirementDescription: "40000 Total Cobblestone",
-            effectDescription: "ph", //Talisman Haste Ring
+            effectDescription: "Increases Compactor Slots by 2", //Talisman Haste Ring
             done() { return player.cb.total.gte(40000) },
         },
         9: {
             requirementDescription: "70000 Total Cobblestone",
-            effectDescription: "Unlocks the Compactor III Upgrade",
+            effectDescription: "Increases Compactor Slots by 3",
             done() { return player.cb.total.gte(70000) },
         },
     },
@@ -398,36 +395,6 @@ addLayer("cb", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Cobblestone per second",
-            unlocked() { return hasMilestone("cb", 2) },
-            cost: new Decimal("64"),
-            currencyDisplayName: "Cobblestone",
-            currencyInternalName: "points",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 9) },
-            cost: new Decimal("64"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -441,8 +408,7 @@ addLayer("cb", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Cobblestone")+"\n\
-                Amount: " + formatWhole(player.cb.cbench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Cobblestone"))
                 return display;
             },
             cost() { 
@@ -508,13 +474,10 @@ addLayer("co", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evcoution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.co
-        if (hasUpgrade("co", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("co", 72)) mult *= 2
-            if (hasUpgrade("co", 73)) mult *= 2
+        if (getBuyableAmount("c", 32).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 32))
 
             data.autotime += diff * mult
             
@@ -529,7 +492,7 @@ addLayer("co", {
                     if (tmp.co.buyables[id].canAfford) {
                         layers.co.buyables[id].buy()
 
-                        if (!hasUpgrade("co", 71)) break
+                        if (!getBuyableAmount("c", 32).gte(1)) break
                     }
                 }
             }
@@ -565,7 +528,7 @@ addLayer("co", {
                 "blank",
                 ["display-text", () => "<div style='width:360px'>You have <h2 style='color:#83622f;text-shadow:#83622f 0px 0px 10px;'>" + formatWhole(player.co.cobench) + "</h2> Enchanted Coal Block</div>"],
                 "blank",
-                ["row", [["buyable", 11]]],
+                ["row", [["buyable", 11], ["buyable", 12]]],
                 "blank",
                 ["row", [["upgrade", 25], ["upgrade", 31], ["upgrade", 32], ["upgrade", 33]]],
                 ["row", [["upgrade", 34], ["upgrade", 35], ["upgrade", 41]]],
@@ -823,36 +786,6 @@ addLayer("co", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Birch Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -866,8 +799,7 @@ addLayer("co", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Coal")+"\n\
-                Amount: " + formatWhole(player.co.coench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Coal"))
                 return display;
             },
             cost() { 
@@ -886,10 +818,10 @@ addLayer("co", {
                 "width": "180px",
                 "height": "120px",
             },
+            unlocked() { return hasMilestone(this.layer, 6) },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player.co.coench) + " / " + formatWhole(data.cost) + " Enchanted Coal")+"\n\
-                Amount: " + formatWhole(player.co.cobench))
+                let display = (("Cost: " + format(player.co.coench) + " / " + formatWhole(data.cost) + " Enchanted Coal"))
                 return display;
             },
             cost() { 

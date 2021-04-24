@@ -12,11 +12,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.0",
-	name: "Compactor I",
+	num: "0.6.0",
+	name: "Compactor II",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.6.0, Compactor II</h3><br>
+		- Reworked Compactors into their own side layer.<br>
+		- Next update is going to be more mine levels, atleast up to diamond.<br>
+		- This version is probably incompatible with v0.5.0.<br><br>
 	<h3>v0.5.0, Compactor I</h3><br>
 		- Added Compactors which are automation for Enchanted stuff.<br>
 		- Right now these go to level 3 and at that point will out produce the regular version of whatever.<br>
@@ -66,7 +70,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(100000)
 	if(hasUpgrade("ol", 11)) {gain = gain.add(1)};
 	if(hasUpgrade("cb", 11)) {gain = gain.add(1)};
 	return gain

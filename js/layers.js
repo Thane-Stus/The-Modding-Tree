@@ -51,11 +51,8 @@ addLayer("ol", {
 
     update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.ol
-        if (hasUpgrade("ol", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("ol", 72)) mult *= 2
-            if (hasUpgrade("ol", 73)) mult *= 2
+        if (getBuyableAmount("c", 21).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 21))
 
             data.autotime += diff * mult
             
@@ -70,7 +67,7 @@ addLayer("ol", {
                     if (tmp.ol.buyables[id].canAfford) {
                         layers.ol.buyables[id].buy()
 
-                        if (!hasUpgrade("ol", 71)) break
+                        if (!getBuyableAmount("c", 21).gte(1)) break
                     }
                 }
             }
@@ -165,12 +162,12 @@ addLayer("ol", {
         cols: 5,
         11: {
             title: "Rookie Axe",
-            description: "x2 All Log Gains and +1 Work Gain",
+            description: "x2 All Foraging Gains and +1 Work Gain",
             cost: new Decimal("10"),
         },
         12: {
             title: "Promising Axe",
-            description: "Boosts All Log gains based on best Oak Log count",
+            description: "Boosts All Foraging gains based on best Oak Log count",
             cost: new Decimal("20"),
             effect() {
                 eff = player[this.layer].best.add(1).ln().div(5).add(2) //Modified version of a formula from The Leveling Tree
@@ -373,36 +370,6 @@ addLayer("ol", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Oak Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -416,8 +383,7 @@ addLayer("ol", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Oak Logs")+"\n\
-                Amount: " + formatWhole(player.ol.olench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Oak Logs"))
                 return display;
             },
             cost() { 
@@ -484,13 +450,10 @@ addLayer("bl", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evblution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.bl
-        if (hasUpgrade("bl", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("bl", 72)) mult *= 2
-            if (hasUpgrade("bl", 73)) mult *= 2
+        if (getBuyableAmount("c", 22).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 22))
 
             data.autotime += diff * mult
             
@@ -505,7 +468,7 @@ addLayer("bl", {
                     if (tmp.bl.buyables[id].canAfford) {
                         layers.bl.buyables[id].buy()
 
-                        if (!hasUpgrade("bl", 71)) break
+                        if (!getBuyableAmount("c", 22).gte(1)) break
                     }
                 }
             }
@@ -599,7 +562,7 @@ addLayer("bl", {
         cols: 5,
         11: {
             title: "Sculptor's Axe",
-            description: "x1.5 All Log Gains",
+            description: "x1.5 All Foraging Gains",
             cost: new Decimal("192"),
         },
 
@@ -803,36 +766,6 @@ addLayer("bl", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Birch Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -846,8 +779,7 @@ addLayer("bl", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Birch Logs")+"\n\
-                Amount: " + formatWhole(player.bl.blench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Birch Logs"))
                 return display;
             },
             cost() { 
@@ -914,13 +846,10 @@ addLayer("sl", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evslution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.sl
-        if (hasUpgrade("sl", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("sl", 72)) mult *= 2
-            if (hasUpgrade("sl", 73)) mult *= 2
+        if (getBuyableAmount("c", 23).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 23))
 
             data.autotime += diff * mult
             
@@ -935,7 +864,7 @@ addLayer("sl", {
                     if (tmp.sl.buyables[id].canAfford) {
                         layers.sl.buyables[id].buy()
 
-                        if (!hasUpgrade("sl", 71)) break
+                        if (!getBuyableAmount("c", 23).gte(1)) break
                     }
                 }
             }
@@ -1227,36 +1156,6 @@ addLayer("sl", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Spruce Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -1270,8 +1169,7 @@ addLayer("sl", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Spruce Logs")+"\n\
-                Amount: " + formatWhole(player.sl.slench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Spruce Logs"))
                 return display;
             },
             cost() { 
@@ -1338,13 +1236,10 @@ addLayer("dl", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evdlution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.dl
-        if (hasUpgrade("dl", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("dl", 72)) mult *= 2
-            if (hasUpgrade("dl", 73)) mult *= 2
+        if (getBuyableAmount("c", 24).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 24))
 
             data.autotime += diff * mult
             
@@ -1359,7 +1254,7 @@ addLayer("dl", {
                     if (tmp.dl.buyables[id].canAfford) {
                         layers.dl.buyables[id].buy()
 
-                        if (!hasUpgrade("dl", 71)) break
+                        if (!getBuyableAmount("c", 24).gte(1)) break
                     }
                 }
             }
@@ -1651,36 +1546,6 @@ addLayer("dl", {
             currencyInternalName: "points",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Dark Oak Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -1694,8 +1559,7 @@ addLayer("dl", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Dark Oak Logs")+"\n\
-                Amount: " + formatWhole(player.dl.dlench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Dark Oak Logs"))
                 return display;
             },
             cost() { 
@@ -1762,13 +1626,10 @@ addLayer("al", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evalution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.al
-        if (hasUpgrade("al", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("al", 72)) mult *= 2
-            if (hasUpgrade("al", 73)) mult *= 2
+        if (getBuyableAmount("c", 25).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 25))
 
             data.autotime += diff * mult
             
@@ -1783,7 +1644,7 @@ addLayer("al", {
                     if (tmp.al.buyables[id].canAfford) {
                         layers.al.buyables[id].buy()
 
-                        if (!hasUpgrade("al", 71)) break
+                        if (!getBuyableAmount("c", 25).gte(1)) break
                     }
                 }
             }
@@ -2075,36 +1936,6 @@ addLayer("al", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Acacia Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -2118,8 +1949,7 @@ addLayer("al", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Acacia Logs")+"\n\
-                Amount: " + formatWhole(player.al.alench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Acacia Logs"))
                 return display;
             },
             cost() { 
@@ -2186,13 +2016,10 @@ addLayer("jl", {
         return gain
     },
 
-    update(diff){ //I borrowed this from pg132s Evjlution Tree, because I have no idea what the hell im doing
+    update(diff){ //I borrowed this from pg132s Evolution Tree, because I have no idea what the hell im doing
         let data = player.jl
-        if (hasUpgrade("jl", 71)) {
-            let mult = 1
-
-            if (hasUpgrade("jl", 72)) mult *= 2
-            if (hasUpgrade("jl", 73)) mult *= 2
+        if (getBuyableAmount("c", 26).gte(1)) {
+            let mult = new Decimal(1).times(getBuyableAmount("c", 26))
 
             data.autotime += diff * mult
             
@@ -2207,7 +2034,7 @@ addLayer("jl", {
                     if (tmp.jl.buyables[id].canAfford) {
                         layers.jl.buyables[id].buy()
 
-                        if (!hasUpgrade("jl", 71)) break
+                        if (!getBuyableAmount("c", 26).gte(1)) break
                     }
                 }
             }
@@ -2301,7 +2128,7 @@ addLayer("jl", {
         cols: 5,
         11: { //This is probably WAY too strong, probably best to nerf when Treecapitator gets added
             title: "Jungle Axe",
-            description: "x10 All Log gains",
+            description: "x10 All Foraging gains",
             cost: new Decimal("3"),
             currencyDisplayName: "Enchanted Jungle Logs",
             currencyInternalName: "jlench",
@@ -2509,36 +2336,6 @@ addLayer("jl", {
             currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
-
-        71: {
-            title: "Compactor I",
-            description: "Gain 1 Enchanted Jungle Log per second",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("8"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        72: {
-            title: "Compactor II",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("16"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
-
-        73: {
-            title: "Compactor III",
-            description: "Boosts Compactor I",
-            unlocked() { return hasMilestone("cb", 4) },
-            cost: new Decimal("32"),
-            currencyDisplayName: "Enchanted Cobblestone",
-            currencyInternalName: "cbench",
-            currencyLocation() { return player.cb },
-        },
     },
 
     buyables: {
@@ -2552,8 +2349,7 @@ addLayer("jl", {
             },
             display() {
                 let data = tmp[this.layer].buyables[this.id]
-                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Birch Logs")+"\n\
-                Amount: " + formatWhole(player.jl.jlench))
+                let display = (("Cost: " + format(player[this.layer].points) + " / " + formatWhole(data.cost) + " Jungle Logs"))
                 return display;
             },
             cost() { 
