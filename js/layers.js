@@ -178,11 +178,11 @@ addLayer("ol", {
 
         21: {
             title: "Oak Minion I",
-            description: "Generates 100% of Oak Log Gain per second",
+            description: "Generates 50% of Oak Log Gain per second",
             unlocked() { return hasMilestone("ol", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -195,9 +195,9 @@ addLayer("ol", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -293,9 +293,9 @@ addLayer("ol", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
         },
@@ -336,11 +336,11 @@ addLayer("ol", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Oak Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -359,11 +359,11 @@ addLayer("ol", {
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Oak Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Oak Logs",
@@ -485,6 +485,7 @@ addLayer("bl", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 11]]],
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
@@ -572,7 +573,7 @@ addLayer("bl", {
             unlocked() { return hasMilestone("bl", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -585,9 +586,9 @@ addLayer("bl", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -683,9 +684,9 @@ addLayer("bl", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
             currencyDisplayName: "Oak Logs",
@@ -716,7 +717,7 @@ addLayer("bl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Birch Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -729,11 +730,11 @@ addLayer("bl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Birch Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -742,24 +743,21 @@ addLayer("bl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Birch Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
                 let eff = Decimal.add(0.05);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
-            currencyLocation() { return player.ol },
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Birch Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Oak Logs",
@@ -881,6 +879,7 @@ addLayer("sl", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
                 ["row", [["upgrade", 61], ["upgrade", 62], ["upgrade", 63], ["upgrade", 64]]],
@@ -962,7 +961,7 @@ addLayer("sl", {
             unlocked() { return hasMilestone("sl", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -975,9 +974,9 @@ addLayer("sl", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -1073,9 +1072,9 @@ addLayer("sl", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
             currencyDisplayName: "Oak Logs",
@@ -1106,7 +1105,7 @@ addLayer("sl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Spruce Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1119,11 +1118,11 @@ addLayer("sl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Spruce Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -1132,24 +1131,21 @@ addLayer("sl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Spruce Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
                 let eff = Decimal.add(0.05);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
-            currencyLocation() { return player.ol },
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Spruce Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Oak Logs",
@@ -1271,6 +1267,7 @@ addLayer("dl", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
                 ["row", [["upgrade", 61], ["upgrade", 62], ["upgrade", 63], ["upgrade", 64]]],
@@ -1352,7 +1349,7 @@ addLayer("dl", {
             unlocked() { return hasMilestone("dl", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -1365,9 +1362,9 @@ addLayer("dl", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -1463,9 +1460,9 @@ addLayer("dl", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
             currencyDisplayName: "Oak Logs",
@@ -1496,7 +1493,7 @@ addLayer("dl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Dark Oak Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1509,11 +1506,11 @@ addLayer("dl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Dark Oak Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -1522,28 +1519,25 @@ addLayer("dl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Dark Oak Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
                 let eff = Decimal.add(0.05);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
-            currencyLocation() { return player.ol },
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Dark Oak Minion gain by 20%",
-            cost: new Decimal("160"),
+            description: "Boosts first Oak Minion gain by 10%",
+            cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
+            currencyDisplayName: "Enchanted Oak Logs",
+            currencyInternalName: "olench",
             currencyLocation() { return player.ol },
         },
     },
@@ -1661,6 +1655,7 @@ addLayer("al", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
                 ["row", [["upgrade", 61], ["upgrade", 62], ["upgrade", 63], ["upgrade", 64]]],
@@ -1742,7 +1737,7 @@ addLayer("al", {
             unlocked() { return hasMilestone("al", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -1755,9 +1750,9 @@ addLayer("al", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -1853,9 +1848,9 @@ addLayer("al", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
             currencyDisplayName: "Oak Logs",
@@ -1886,7 +1881,7 @@ addLayer("al", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Acacia Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -1899,11 +1894,11 @@ addLayer("al", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Acacia Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -1912,24 +1907,21 @@ addLayer("al", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Acacia Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
                 let eff = Decimal.add(0.05);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
-            currencyLocation() { return player.ol },
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Acacia Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Oak Logs",
@@ -2051,6 +2043,7 @@ addLayer("jl", {
                 "blank",
                 "prestige-button", 
                 "resource-display",
+                "blank",
                 ["row", [["upgrade", 11]]],
                 ["row", [["upgrade", 21], ["upgrade", 22], ["upgrade", 23], ["upgrade", 24]]],
                 ["row", [["upgrade", 51], ["upgrade", 52], ["upgrade", 53]]],
@@ -2142,7 +2135,7 @@ addLayer("jl", {
             unlocked() { return hasMilestone("jl", 0) },
             cost: new Decimal("80"),
             effect() {
-                let eff = Decimal.plus(1);
+                let eff = Decimal.plus(0.5);
                 if(hasUpgrade(this.layer, 22)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 23)) eff = eff.add(0.06)
                 if(hasUpgrade(this.layer, 24)) eff = eff.add(0.06)
@@ -2155,9 +2148,9 @@ addLayer("jl", {
                 if(hasUpgrade(this.layer, 41)) eff = eff.add(0.21)
                 if(hasUpgrade(this.layer, 51)) eff = eff.add(upgradeEffect(this.layer, 51))
                 if(hasUpgrade(this.layer, 61)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 62)) eff = eff.add(0.10)
                 if(hasUpgrade(this.layer, 63)) eff = eff.add(0.05)
-                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.20)
+                if(hasUpgrade(this.layer, 64)) eff = eff.add(0.10)
                 return eff
             },
             effectDisplay() { return format(this.effect()) },
@@ -2253,9 +2246,9 @@ addLayer("jl", {
             cost: new Decimal("64"),
             unlocked() { return hasMilestone("ol", 3) },
             effect() {
-                let eff = Decimal.add(0.33);
-                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.33)
-                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.33)
+                let eff = Decimal.add(0.2);
+                if(hasUpgrade(this.layer, 52)) eff = eff.add(0.2)
+                if(hasUpgrade(this.layer, 53)) eff = eff.add(0.2)
                 return eff
             },
             currencyDisplayName: "Oak Logs",
@@ -2286,7 +2279,7 @@ addLayer("jl", {
         //Maybe make these timed buyables later? Probably not.
         61: {
             title: "Coal",
-            description: "Boosts first Jungle Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("cb", 1) },
             effect() {
@@ -2299,11 +2292,11 @@ addLayer("jl", {
         },
         62: {
             title: "Enchanted Coal",
-            description: "Boosts first Jungle Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasMilestone("co", 3) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Coal",
@@ -2312,24 +2305,21 @@ addLayer("jl", {
         },
         63: {
             title: "Charcoal",
-            description: "Boosts first Jungle Minion gain by 5%",
+            description: "Boosts first Oak Minion gain by 5%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 13) },
             effect() {
                 let eff = Decimal.add(0.05);
                 return eff
             },
-            currencyDisplayName: "Oak Logs",
-            currencyInternalName: "points",
-            currencyLocation() { return player.ol },
         },
         64: {
             title: "Enchanted Charcoal",
-            description: "Boosts first Jungle Minion gain by 20%",
+            description: "Boosts first Oak Minion gain by 10%",
             cost: new Decimal("1"),
             unlocked() { return hasUpgrade("cb", 14) },
             effect() {
-                let eff = Decimal.add(0.20);
+                let eff = Decimal.add(0.10);
                 return eff
             },
             currencyDisplayName: "Enchanted Oak Logs",

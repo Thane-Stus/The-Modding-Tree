@@ -12,11 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.0",
+	num: "0.6.5",
 	name: "Compactor II",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.6.5, Compactor II</h3><br>
+		- Lowered minion output and bonuses from some minion upgrades.<br><br>
 	<h3>v0.6.0, Compactor II</h3><br>
 		- Reworked Compactors into their own side layer.<br>
 		- Next update is going to be more mine levels, atleast up to diamond.<br>
@@ -26,7 +28,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Right now these go to level 3 and at that point will out produce the regular version of whatever.<br>
 		- Probably gonna rework these into a weird buyable system later, this is mostly just figuring out how autobuyers for buyables works.<br>
 		- Also tweaked some upgrade costs and made all milestones based on total instead of best.<br><br>
-	<h3>v0.4.1, The Depths Bekon</h3><br>
+	<h3>v0.4.5, The Depths Bekon</h3><br>
 		- Fixed some stuff, mostly things with the wrong names<br><br>
 	<h3>v0.4.0, The Depths Bekon</h3><br>
 		- Added Cobblestone and Coal layers<br>
@@ -39,9 +41,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10<br>
 		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer<br>
 		- Temporarily removed Cobblestone Mine, will readd this next update alongside a few other mines<br>
-		- This version wont work with any saves made on v0.2.0 or v0.2.1<br><br>
-	<h3>v0.2.1, The Forests for the Trees</h3><br>
-		- Fixed Work gain being way too high<br><br>
+		- This version wont work with any saves made on v0.2.0 or v0.2.0<br><br>
 	<h3>v0.2.0, The Forests for the Trees</h3><br>
 		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers<br>
 		- This version wont work with any saves made on v0.1 or v0.1.5<br><br>
@@ -50,7 +50,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1, Oak and Cobble</h3><br>
 		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `If you're seeing this then I probably messed up something. Please let me know if you do see this thanks.`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
