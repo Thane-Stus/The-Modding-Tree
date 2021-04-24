@@ -39,8 +39,8 @@ addLayer("c", {
         "blank",
         "upgrades",
         "blank",
-        "respec-button",
         ["row", [["buyable", 11]]],
+        "respec-button",
         ["microtabs", "compactortabs"]
     ],
 
