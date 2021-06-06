@@ -1,5 +1,5 @@
 let modInfo = {
-	name: "The Skypixel Hyblock Tree",
+	name: "The Hypixel Skyblock Tree",
 	id: "hypixeltree",
 	author: "Thane-Stus#0893",
 	pointsName: "Work",
@@ -12,44 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.5",
-	name: "Compactor II",
+	num: "0.1",
+	name: "ph",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.6.5, Compactor II</h3><br>
-		- Lowered minion output and bonuses from some minion upgrades.<br>
-		- Next update is more Mining levels.<br><br>
-	<h3>v0.6.0, Compactor II</h3><br>
-		- Reworked Compactors into their own side layer.<br>
-		- Next update is going to be more mine levels, atleast up to diamond.<br>
-		- This version is probably incompatible with v0.5.0.<br><br>
-	<h3>v0.5.0, Compactor I</h3><br>
-		- Added Compactors which are automation for Enchanted stuff.<br>
-		- Right now these go to level 3 and at that point will out produce the regular version of whatever.<br>
-		- Probably gonna rework these into a weird buyable system later, this is mostly just figuring out how autobuyers for buyables works.<br>
-		- Also tweaked some upgrade costs and made all milestones based on total instead of best.<br><br>
-	<h3>v0.4.5, The Depths Bekon</h3><br>
-		- Fixed some stuff, mostly things with the wrong names.<br><br>
-	<h3>v0.4.0, The Depths Bekon</h3><br>
-		- Added Cobblestone and Coal layers.<br>
-		- These two layers introduce several minion boosting upgrades to all other layers.<br>
-		- This should be save compatible with v0.3.0 and v0.3.5.<br><br>
-	<h3>v0.3.5, The Forests for the Trees: Rewrite 2</h3><br>
-		- Made the button for getting Enchanted stuff into a buyable.<br>
-		- This should be save compatible with 0.3.0.<br><br>
-	<h3>v0.3.0, The Forests for the Trees: Rewrite</h3><br>
-		- Rewrote all Log/Foraging layers so now there is only 5 instead of 10.<br>
-		- Did this by redoing how Enchanted stuff is handled so they dont need their own layer.<br>
-		- Temporarily removed Cobblestone Mine, will readd this next update alongside a few other mines.<br>
-		- This version wont work with any saves made on v0.2.0 or v0.2.0.<br><br>
-	<h3>v0.2.0, The Forests for the Trees</h3><br>
-		- Added Spruce, Dark Oak, Acacia, and Jungle logs and their associated Enchanted layers.<br>
-		- This version wont work with any saves made on v0.1 or v0.1.5.<br><br>
-	<h3>v0.1.5, Oak and Cobble and Birch</h3><br>
-	 	- Added Birch and Enchanted Birch layer.<br><br>
-	<h3>v0.1, Oak and Cobble</h3><br>
-		- Added Oak, Cobblestone, Enchanted Oak, and Enchanted Cobblestone layers.`
+	<h3>v0.1</h3><br>
+		- ph`
 
 let winText = `If you're seeing this then I probably messed up something. Please let me know if you do see this thanks.`
 
@@ -72,8 +41,7 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
-	if(hasUpgrade("ol", 11)) {gain = gain.add(1)};
-	if(hasUpgrade("cb", 11)) {gain = gain.add(1)};
+	if(player.points.gte(10)) gain = new Decimal(0)
 	return gain
 }
 
