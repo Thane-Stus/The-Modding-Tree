@@ -2,7 +2,7 @@ let modInfo = {
 	name: "The Hypixel Skyblock Tree",
 	id: "hypixeltree",
 	author: "Thane-Stus#0893",
-	pointsName: "Work",
+	pointsName: "Stamina",
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (0), // Used for hard resets and new players
@@ -20,7 +20,7 @@ let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.1</h3><br>
 		- ph`
 
-let winText = `If you're seeing this then I probably messed up something. Please let me know if you do see this thanks.`
+let winText = `If youre seeing this you broke or edited something. Congrats!`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -40,7 +40,12 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(1)
+	let gain = new Decimal(100)
+	if(hasMilestone("f", 1)) gain = gain.add(0.1)
+	if(hasMilestone("f", 2)) gain = gain.add(0.1)
+	if(hasMilestone("f", 3)) gain = gain.add(0.1)
+	if(hasMilestone("f", 4)) gain = gain.add(0.1)
+	if(hasMilestone("f", 5)) gain = gain.add(0.1)
 	if(player.points.gte(10)) gain = new Decimal(0)
 	return gain
 }
