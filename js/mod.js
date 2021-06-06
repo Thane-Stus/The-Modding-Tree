@@ -40,7 +40,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 
-	let gain = new Decimal(100)
+	let gain = new Decimal(1)
 	if(hasMilestone("f", 1)) gain = gain.add(0.1)
 	if(hasMilestone("f", 2)) gain = gain.add(0.1)
 	if(hasMilestone("f", 3)) gain = gain.add(0.1)
